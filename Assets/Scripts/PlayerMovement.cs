@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     
     public Transform groundCheck; // transform enfant du player qui détecte les colisions avec le sol
 
+    public Animator Anim;
     private float horizontalmove;
     private bool isJumping;
     private bool isGrounded;
@@ -25,7 +26,12 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, collisionLayers);
         
         //le joueur appuie sur q ou d pour se déplacer, on obtient la valeur du mouvement horizontale
-        horizontalmove = Input.GetAxis("Horizontal") * 500 * Time.deltaTime;
+        horizontalmove = Input.GetAxis("Horizontal") * 150 * Time.fixedDeltaTime;
+
+
+        Anim.SetBool("isWalking",horizontalmove!=0 && isGrounded);
+
+
 
         if (Input.GetButtonDown("Jump") && isGrounded && velocity.y == 0f)
         {
@@ -65,9 +71,12 @@ public class PlayerMovement : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-        else
+        else 
         {
-            spriteRenderer.flipX = false;
+            if (_rbvelocity > 0.1f)
+            {
+                spriteRenderer.flipX = false;
+            }
         }
     }
 

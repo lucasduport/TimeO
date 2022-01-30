@@ -461,8 +461,9 @@ GameObject:
   - component: {fileID: 1288056372}
   - component: {fileID: 1288056371}
   - component: {fileID: 1288056370}
+  - component: {fileID: 1288056375}
   m_Layer: 3
-  m_Name: TimeO
+  m_Name: "Tim\xE9o"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -507,6 +508,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   groundCheck: {fileID: 45668478}
+  Anim: {fileID: 1288056375}
 --- !u!70 &1288056372
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -589,6 +591,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1288056375
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288056369}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ca8f90dcfc4453342a4ece58e7abc049, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1420404383
 GameObject:
   m_ObjectHideFlags: 0
