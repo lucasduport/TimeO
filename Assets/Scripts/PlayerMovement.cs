@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,34 +21,48 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private Vector3 velocity = Vector3.zero;
 
+    private PhotonView _view;
+
+    private void Start()
+    {
+        _view = GetComponent<PhotonView>();
+        Photon.Pun.Demo.PunBasics.CameraWork _cameraWork = this.gameObject.GetComponent<Photon.Pun.Demo.PunBasics.CameraWork>();
+        if (_view.IsMine)_cameraWork.OnStartFollowing();
+    }
+
     void Update()
     {
-        //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, collisionLayers);
-        
-        //le joueur appuie sur q ou d pour se déplacer, on obtient la valeur du mouvement horizontale
-        horizontalmove = Input.GetAxis("Horizontal") * 150 * Time.fixedDeltaTime;
-
-
-        Anim.SetBool("isWalking",horizontalmove!=0 && isGrounded);
-
-
-
-        if (Input.GetButtonDown("Jump") && isGrounded && velocity.y == 0f)
+        if (_view.IsMine)
         {
-            isJumping = true;
+            //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, collisionLayers);
+
+            //le joueur appuie sur q ou d pour se déplacer, on obtient la valeur du mouvement horizontale
+            horizontalmove = Input.GetAxis("Horizontal") * 150 * Time.fixedDeltaTime;
+
+
+            Anim.SetBool("isWalking", horizontalmove != 0 && isGrounded);
+
+
+
+            if (Input.GetButtonDown("Jump") && isGrounded && velocity.y == 0f)
+            {
+                isJumping = true;
+            }
+            
+            
         }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        MovePlayer(horizontalmove);
-        
-        Flip(rb.velocity.x);
-
-        
+        if (_view.IsMine)
+        {
+            MovePlayer(horizontalmove);
+            Flip(rb.velocity.x);
+        }
     }
-    
+
     //MovePlayer() gère de le déplacement du joueur en fonction de _horizontalmove
     void MovePlayer (float _horizontalmove)
     {
@@ -78,6 +93,19 @@ public class PlayerMovement : MonoBehaviour
                 spriteRenderer.flipX = false;
             }
         }
+        
+        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(spriteRenderer.flipX);
+            }
+            else
+            {
+                spriteRenderer.flipX = (bool) stream.ReceiveNext();
+            }
+        }
+        
     }
 
     /* Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
