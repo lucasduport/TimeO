@@ -8,26 +8,38 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public Rigidbody2D rb; //le rigidbody du player
+    private Rigidbody2D rb; //le rigidbody du player
+    public Collider2D otherPlayerCollider;
+    private Transform PTransform; //transform du player
     
-    public SpriteRenderer spriteRenderer; //image du player
     public LayerMask collisionLayers; //Layer avec lequel jump doit détecter les collisions
     
     public Transform groundCheck; // transform enfant du player qui détecte les colisions avec le sol
 
     public Animator Anim;
+    
     private float horizontalmove;
+    private Vector3 velocity = Vector3.zero;
+    
     private bool isJumping;
     private bool isGrounded;
-    private Vector3 velocity = Vector3.zero;
 
+    public Camera m_cam;
     private PhotonView _view;
 
     private void Start()
     {
+        //Récupération des composants
+        rb = GetComponent<Rigidbody2D>();
+        PTransform = GetComponent<Transform>();
+        
         _view = GetComponent<PhotonView>();
-        Photon.Pun.Demo.PunBasics.CameraWork _cameraWork = this.gameObject.GetComponent<Photon.Pun.Demo.PunBasics.CameraWork>();
-        if (_view.IsMine)_cameraWork.OnStartFollowing();
+        
+        if (_view.IsMine)
+        {
+            //par défaut les cam enfants des préabs joueurs sont désactivées : si la vue et la notre alors on les active
+            m_cam.gameObject.SetActive(true);
+        }
     }
 
     void Update()
@@ -40,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
             //le joueur appuie sur q ou d pour se déplacer, on obtient la valeur du mouvement horizontale
             horizontalmove = Input.GetAxis("Horizontal") * 150 * Time.fixedDeltaTime;
 
-
+            //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sole = il marche
             Anim.SetBool("isWalking", horizontalmove != 0 && isGrounded);
 
 
@@ -56,11 +68,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_view.IsMine)
-        {
-            MovePlayer(horizontalmove);
-            Flip(rb.velocity.x);
-        }
+        MovePlayer(horizontalmove);
+
+        Flip(rb.velocity.x);
     }
 
     //MovePlayer() gère de le déplacement du joueur en fonction de _horizontalmove
@@ -84,28 +94,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_rbvelocity < -0.1f)
         {
-            spriteRenderer.flipX = true;
+            //la scale est inversée, l'image est retournée
+            PTransform.localScale = new Vector3(-0.5f,PTransform.localScale.y,PTransform.localScale.z);
         }
         else 
         {
             if (_rbvelocity > 0.1f)
             {
-                spriteRenderer.flipX = false;
+                PTransform.localScale = new Vector3(0.5f,PTransform.localScale.y,PTransform.localScale.z);
             }
         }
-        
-        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-            if (stream.IsWriting)
-            {
-                stream.SendNext(spriteRenderer.flipX);
-            }
-            else
-            {
-                spriteRenderer.flipX = (bool) stream.ReceiveNext();
-            }
-        }
-        
+
     }
 
     /* Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
