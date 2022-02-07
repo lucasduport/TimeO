@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e2e7429a5b7f54b929a2306ed46480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherPlayerCollider: {fileID: 3074303592779483184, guid: 910c14cff99d6124693aa4afb8aad726, type: 3}
   collisionLayers:
     serializedVersion: 2
     m_Bits: 1
@@ -208,6 +207,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: isWalking
+  - Type: 4
+    SynchronizeType: 0
+    Name: isJumping
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

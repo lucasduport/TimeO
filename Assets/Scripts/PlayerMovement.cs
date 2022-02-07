@@ -9,11 +9,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     private Rigidbody2D rb; //le rigidbody du player
-    public Collider2D otherPlayerCollider;
     private Transform PTransform; //transform du player
-    
-    public LayerMask collisionLayers; //Layer avec lequel jump doit détecter les collisions
-    
+
     public Transform groundCheck; // transform enfant du player qui détecte les colisions avec le sol
 
     public Animator Anim;
@@ -47,18 +44,21 @@ public class PlayerMovement : MonoBehaviour
         if (_view.IsMine)
         {
             //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
-            isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, collisionLayers);
-
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, LayerMask.NameToLayer("Player"));
+                                                        //default est le nom du layer avec qui les detections seront faites
+            
             //le joueur appuie sur q ou d pour se déplacer, on obtient la valeur du mouvement horizontale
             horizontalmove = Input.GetAxis("Horizontal") * 150 * Time.fixedDeltaTime;
 
-            //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sole = il marche
-            Anim.SetBool("isWalking", horizontalmove != 0 && isGrounded);
+            //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche
+            Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
+            Anim.SetBool("isJumping", !isGrounded);
 
 
-
-            if (Input.GetButtonDown("Jump") && isGrounded && velocity.y == 0f)
+            
+            if (Input.GetButtonDown("Jump") && isGrounded && Math.Abs(rb.velocity.y) < 0.5)
             {
+                Debug.Log(rb.velocity.y);
                 isJumping = true;
             }
             
@@ -78,12 +78,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 targetVelocity = new Vector2(_horizontalmove, rb.velocity.y);
         //le SmoothDamp permet de ne pas faire un déplacement trop bref mais légerement glissé
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, .05f);
-
+        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, 0.05f);
         if (isJumping)
         {
             //On pousse le rigidbody vers le haut
             rb.AddForce(new Vector2(0f, 250f));
+            
             isJumping = false;
         }
     }
