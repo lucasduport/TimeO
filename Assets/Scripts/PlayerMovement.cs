@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
         
         _view = GetComponent<PhotonView>();
         
+        //méthode de PhotonView qui permait de savoir si l'on est bien sur la vue du joueur concerné
         if (_view.IsMine)
         {
             //par défaut les cam enfants des préabs joueurs sont désactivées : si la vue et la notre alors on les active
@@ -58,14 +59,13 @@ public class PlayerMovement : MonoBehaviour
             
             if (Input.GetButtonDown("Jump") && isGrounded && Math.Abs(rb.velocity.y) < 0.5)
             {
-                Debug.Log(rb.velocity.y);
                 isJumping = true;
             }
             
             
         }
     }
-    // Update is called once per frame
+
     void FixedUpdate()
     {
         MovePlayer(horizontalmove);
@@ -107,7 +107,8 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    /* Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
+    /* Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut du joueur
+     
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

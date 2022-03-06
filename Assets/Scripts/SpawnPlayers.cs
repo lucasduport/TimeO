@@ -8,6 +8,7 @@ public class SpawnPlayers : MonoBehaviour
 {
     public GameObject Player1Prefab;
     public GameObject Player2Prefab;
+    public GameObject MobPrefab;
 
     public Transform SpawnLocation;
 
@@ -18,6 +19,7 @@ public class SpawnPlayers : MonoBehaviour
         if (PhotonNetwork.PlayerList.Length ==1)
         {
             PhotonNetwork.Instantiate(Player1Prefab.name, SpawnLocation.position, Quaternion.identity);
+            PhotonNetwork.Instantiate(MobPrefab.name, SpawnLocation.position, Quaternion.identity);
         }
         else
         {
