@@ -88,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //--------------------------------------------*-------------------------------------
     //Flip() qui prend en paramètre la vitesse du RigidBody, permet de savoir dans quel sens se déplace le perso et ainsi
     //de retourner l'image si besoin
     void Flip(float _rbvelocity)

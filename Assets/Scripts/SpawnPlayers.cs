@@ -16,7 +16,7 @@ public class SpawnPlayers : MonoBehaviour
     void Start()
     {
         //si le joueur est le second arrivé sur le server, il aura le style du perso2 et non de Timéo
-        if (PhotonNetwork.PlayerList.Length ==1)
+        if (PhotonNetwork.PlayerList.Length == 1)
         {
             PhotonNetwork.Instantiate(Player1Prefab.name, SpawnLocation.position, Quaternion.identity);
             PhotonNetwork.Instantiate(MobPrefab.name, SpawnLocation.position, Quaternion.identity);

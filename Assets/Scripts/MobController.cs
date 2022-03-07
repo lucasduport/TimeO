@@ -37,8 +37,7 @@ public class MobController : MonoBehaviour
         //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, Layerr);
                                                         //Mob est le nom du layer avec qui les detections seront faites
-            
-        //le joueur appuie sur q ou d pour se déplacer, on obtient la valeur du mouvement horizontale
+                                                        
         horizontalmove = 0.9f * 150 * Time.fixedDeltaTime;
 
         //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche

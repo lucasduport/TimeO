@@ -119,9 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e2e7429a5b7f54b929a2306ed46480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionLayers:
-    serializedVersion: 2
-    m_Bits: 1
   groundCheck: {fileID: 8048559128343390082}
   Anim: {fileID: 1991021293448975202}
   m_cam: {fileID: 4289584902143866707}
