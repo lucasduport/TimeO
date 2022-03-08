@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb; //le rigidbody du player
     private Transform PTransform; //transform du player
 
-    public Transform groundCheck; // transform enfant du player qui détecte les colisions avec le sol
+    public Transform groundCheck; //transform enfant du player qui détecte les collisions avec le sol
 
     public Animator Anim;
     
@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
 
     public Camera m_cam;
+    public Canvas canvas;
     private PhotonView _view;
 
     private void Start()
@@ -37,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
         {
             //par défaut les cam enfants des préabs joueurs sont désactivées : si la vue et la notre alors on les active
             m_cam.gameObject.SetActive(true);
+            canvas.gameObject.SetActive(true);
+            
         }
     }
 
@@ -46,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, LayerMask.NameToLayer("Player"));
-                                                        //default est le nom du layer avec qui les detections seront faites
+                                                        //player est le nom du layer avec qui les detections ne seront pas faites
             
             //le joueur appuie sur q ou d pour se déplacer, on obtient la valeur du mouvement horizontale
             horizontalmove = Input.GetAxis("Horizontal") * 150 * Time.fixedDeltaTime;
@@ -54,15 +57,12 @@ public class PlayerMovement : MonoBehaviour
             //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche
             Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
             Anim.SetBool("isJumping", !isGrounded);
-
-
+            
             
             if (Input.GetButtonDown("Jump") && isGrounded && Math.Abs(rb.velocity.y) < 0.5)
             {
                 isJumping = true;
             }
-            
-            
         }
     }
 
@@ -107,13 +107,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-
-    /* Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut du joueur
+    
      
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position,0.3f);
     }
-    */
 }

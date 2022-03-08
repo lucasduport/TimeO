@@ -38,18 +38,15 @@ public class MobController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, Layerr);
                                                         //Mob est le nom du layer avec qui les detections seront faites
                                                         
-        horizontalmove = 0.9f * 150 * Time.fixedDeltaTime;
+        horizontalmove = 0 * 150 * Time.fixedDeltaTime;
 
         //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche
         Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
         Anim.SetBool("isJumping", !isGrounded);
 
         
-        if (Math.Abs(rb.velocity.x) < 1 && isGrounded && Math.Abs(rb.velocity.y) < 0.5)
-        {
-            isJumping = true;
-        }
-        
+        isJumping = false;
+
     }
     // Update is called once per frame
     void FixedUpdate()
