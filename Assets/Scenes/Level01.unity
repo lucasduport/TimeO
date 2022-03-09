@@ -27206,7 +27206,7 @@ PrefabInstance:
     - target: {fileID: 8854563927909756598, guid: 40b0211db28edd541881135aa6f8f30f, type: 3}
       propertyPath: m_Icon
       value: 
-      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+      objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8854563928667544464, guid: 40b0211db28edd541881135aa6f8f30f, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -28801,7 +28801,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnLocation
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

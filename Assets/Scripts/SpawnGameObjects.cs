@@ -12,7 +12,10 @@ public class SpawnGameObjects : MonoBehaviour
     // ATTENTION ObjectsPrefab.Length == SpawnLocation.Length
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.transform.CompareTag("Player"))
+            //booléen quidit si on se trouve sur le master (celui a qui appartient la room
+            //là uniquement pour que la fonction ne soit jouée qu'une fois et non simultanément sur les deux ordis joueurs
+            //car sinon ça fait spawn deux ennemis
+        if (PhotonNetwork.IsMasterClient && collider.transform.CompareTag("Player"))
         {
             //on instantantie les objects de la liste aux point qui leur correspond
             for (int i = 0; i < ObjectsPrefab.Length; i++)
@@ -21,6 +24,6 @@ public class SpawnGameObjects : MonoBehaviour
             }
         }
         //destruction du spawner (on ne veut pas que a chaque fois que le rigidbody soit trigger ça fasse spawn
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }
