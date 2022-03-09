@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawnerLocation
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -76,9 +76,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectsPrefab:
-  - {fileID: 2119371730088480083, guid: 1d80e09891e39264d883a25c06d2f766, type: 3}
+  - {fileID: 639398116388588925, guid: 61f7be9b3682f734a8bc3e865b195ae8, type: 3}
   SpawnLocation:
-  - {fileID: 0}
+  - {fileID: 8854563927909756596}
 --- !u!61 &8854563928667544466
 BoxCollider2D:
   m_ObjectHideFlags: 0

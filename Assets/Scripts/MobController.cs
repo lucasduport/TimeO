@@ -9,9 +9,9 @@ public class MobController : MonoBehaviour
 {
 
     private Rigidbody2D rb; //le rigidbody du mob
-    private Transform PTransform; //transform du mob
+    private Transform MTransform; //transform du mob
     private Animator Anim;
-    public LayerMask Layerr;
+    public LayerMask layermask;
 
     public Transform groundCheck; // transform enfant du player qui détecte les colisions avec le sol
 
@@ -27,7 +27,7 @@ public class MobController : MonoBehaviour
     {
         //Récupération des composants
         rb = GetComponent<Rigidbody2D>();
-        PTransform = GetComponent<Transform>();
+        MTransform = GetComponent<Transform>();
         Anim = GetComponent<Animator>();
 
     }
@@ -35,8 +35,8 @@ public class MobController : MonoBehaviour
     void Update()
     {
         //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, Layerr);
-                                                        //Mob est le nom du layer avec qui les detections seront faites
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, layermask);
+                                                        //Mob est le nom du layer avec qui les detections ne seront pas faites
                                                         
         horizontalmove = 0 * 150 * Time.fixedDeltaTime;
 
@@ -51,13 +51,13 @@ public class MobController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        MovePlayer(horizontalmove);
+        MoveMob(horizontalmove);
 
         Flip(rb.velocity.x);
     }
 
     //MovePlayer() gère de le déplacement du joueur en fonction de _horizontalmove
-    void MovePlayer (float _horizontalmove)
+    void MoveMob (float _horizontalmove)
     {
         Vector3 targetVelocity = new Vector2(_horizontalmove, rb.velocity.y);
         //le SmoothDamp permet de ne pas faire un déplacement trop bref mais légerement glissé
@@ -75,21 +75,20 @@ public class MobController : MonoBehaviour
     //de retourner l'image si besoin
     void Flip(float _rbvelocity)
     {
-        if (_rbvelocity < -0.1f)
+        if (_rbvelocity < -0.05f)
         {
             //la scale est inversée, l'image est retournée
-            PTransform.localScale = new Vector3(-1f,PTransform.localScale.y,PTransform.localScale.z);
+            MTransform.localScale = new Vector3(0.5f,MTransform.localScale.y,MTransform.localScale.z);
         }
         else 
         {
-            if (_rbvelocity > 0.1f)
+            if (_rbvelocity > 0.05f)
             {
-                PTransform.localScale = new Vector3(1f,PTransform.localScale.y,PTransform.localScale.z);
+                MTransform.localScale = new Vector3(-0.5f,MTransform.localScale.y,MTransform.localScale.z);
             }
         }
 
     }
-
     /*// Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
     private void OnDrawGizmos()
     {

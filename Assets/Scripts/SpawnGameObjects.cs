@@ -12,10 +12,8 @@ public class SpawnGameObjects : MonoBehaviour
     // ATTENTION ObjectsPrefab.Length == SpawnLocation.Length
     void OnTriggerEnter2D(Collider2D collider)
     {
-            //booléen quidit si on se trouve sur le master (celui a qui appartient la room
-            //là uniquement pour que la fonction ne soit jouée qu'une fois et non simultanément sur les deux ordis joueurs
-            //car sinon ça fait spawn deux ennemis
-        if (PhotonNetwork.IsMasterClient && collider.transform.CompareTag("Player"))
+            //on spwanera uniquement si on est bien sur la vue de celui qui est rentré dans le collider donc une fois
+        if (collider.transform.GetComponent<PhotonView>().IsMine && collider.transform.CompareTag("Player"))
         {
             //on instantantie les objects de la liste aux point qui leur correspond
             for (int i = 0; i < ObjectsPrefab.Length; i++)

@@ -109,9 +109,5 @@ public class PlayerMovement : MonoBehaviour
     }
     
      
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position,0.3f);
-    }
+
 }

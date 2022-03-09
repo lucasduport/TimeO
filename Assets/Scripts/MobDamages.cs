@@ -13,6 +13,8 @@ public class MobDamages : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             PlayerHealth playerHealth = collision.transform.GetComponent<PlayerHealth>();
+            Animator anim = transform.GetComponent<Animator>();
+            anim.Play("hit");
             playerHealth.HealthModifications(-damages);
         }
     }
