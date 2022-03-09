@@ -12,16 +12,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        //"a" est une valeur temporaire pour pouvoir tester plus vite
-        //normalement la valeur en paramètre est createInput rentrée par le joueur
-        PhotonNetwork.CreateRoom("a");
+        PhotonNetwork.CreateRoom(createInput.text);
     }
 
     public void JoinRoom()
     {
-        //"a" est une valeur temporaire pour pouvoir tester plus vite
-        //normalement la valeur en paramètre est joinInput rentrée par le joueur
-        PhotonNetwork.JoinRoom("a");
+        PhotonNetwork.JoinRoom(joinInput.text);
     }
 
     public override void OnJoinedRoom()

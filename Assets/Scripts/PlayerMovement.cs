@@ -88,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //--------------------------------------------*-------------------------------------
     //Flip() qui prend en paramètre la vitesse du RigidBody, permet de savoir dans quel sens se déplace le perso et ainsi
     //de retourner l'image si besoin
     void Flip(float _rbvelocity)
@@ -107,7 +106,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-    
-     
+    /*
+    private void OnDrawGizmos() 
+    {
+       Gizmos.color = Color.red;
+       Gizmos.DrawWireSphere(groundCheck.position,0.3f); 
+    }
+    */
 
 }

@@ -9,10 +9,10 @@ public class SpawnGameObjects : MonoBehaviour
     public GameObject[] ObjectsPrefab;
     public Transform[] SpawnLocation;
 
-    // ATTENTION ObjectsPrefab.Length == SpawnLocation.Length
+    // ATTENTION ObjectsPrefab.Length == SpawnLocation.Length sinon bugg
     void OnTriggerEnter2D(Collider2D collider)
-    {
-            //on spwanera uniquement si on est bien sur la vue de celui qui est rentré dans le collider donc une fois
+    { 
+        //on spwanera uniquement si on est bien sur la vue de celui qui est rentré dans le collider donc une seule fois
         if (collider.transform.GetComponent<PhotonView>().IsMine && collider.transform.CompareTag("Player"))
         {
             //on instantantie les objects de la liste aux point qui leur correspond
