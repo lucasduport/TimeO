@@ -159,9 +159,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 100
+  currentHealth: 0
   spriteRenderer: {fileID: 4322859508680806437}
   healthBar: {fileID: 7542802354621245768}
+  Killed: 0
 --- !u!95 &8012323465514559269
 Animator:
   serializedVersion: 3
@@ -295,6 +296,10 @@ PrefabInstance:
     - target: {fileID: 2703324557270913135, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703324557270913135, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
+      propertyPath: m_TagString
+      value: TimeoCam
       objectReference: {fileID: 0}
     - target: {fileID: 6709412257713253549, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
       propertyPath: m_RootOrder

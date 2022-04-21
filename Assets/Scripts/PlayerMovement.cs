@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using Photon.Pun;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,10 +24,11 @@ public class PlayerMovement : MonoBehaviour
     
     private bool isJumping;
     private bool isGrounded;
-
+    
     public Camera m_cam;
     public Canvas canvas;
     private PhotonView _view;
+    
 
     private void Start()
     {
@@ -34,18 +38,32 @@ public class PlayerMovement : MonoBehaviour
         
         _view = GetComponent<PhotonView>();
         
+        CamManager.PlayerCam.Add(gameObject.name,m_cam);
+        
         //méthode de PhotonView qui permait de savoir si l'on est bien sur la vue du joueur concerné
         if (_view.IsMine)
         {
             //par défaut les cam enfants des préabs joueurs sont désactivées : si la vue et la notre alors on les active
             m_cam.gameObject.SetActive(true);
             canvas.gameObject.SetActive(true);
-            
         }
     }
 
     void Update()
     {
+        if (Anim.GetBool("killed"))
+        {
+            if (Anim.GetBool("isBranch"))
+            {
+                Drop();
+                PhotonNetwork.Destroy(gameObject);
+            }
+            else
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+        }
+
         if (_view.IsMine)
         {
             //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
@@ -59,6 +77,10 @@ public class PlayerMovement : MonoBehaviour
             Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
             Anim.SetBool("isJumping", !isGrounded);
             
+            //si l'orbe de gravité est prise alors un timer se lance jusqu'à la fin
+            if (GravityObject.GravityEnabled) StartCoroutine(GravityTime());
+            
+            //isHit doit être vraie seulement une frame car l'anim se joue jusqu'à la fin quoiqu'il arrive
             if (Anim.GetBool("isHit")) Anim.SetBool("isHit",false);
             
             if (Input.GetButtonDown("Fire1"))
@@ -95,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
             if (GravityObject.GravityEnabled)
             {
                 rb.AddForce(new Vector2(0f, 400f));
-                StartCoroutine(GravityTime());
             }
             else
             {
@@ -150,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         GravityObject.GravityEnabled = false;
     }
+    
     /*
     private void OnDrawGizmos() 
     {

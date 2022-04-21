@@ -27271,6 +27271,49 @@ Transform:
   m_Father: {fileID: 1420404385}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &301411611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 301411613}
+  - component: {fileID: 301411612}
+  m_Layer: 0
+  m_Name: CamManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &301411612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301411611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f7765fb06fa7445b9f119eb4b027a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &301411613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301411611}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.28494462, y: -0.37983084, z: -5.146176}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &350832412
 GameObject:
   m_ObjectHideFlags: 0
@@ -27506,11 +27549,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3708574032579584329, guid: 53713616c975b25469895ae9ac5536bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.77
+      value: 6.67
       objectReference: {fileID: 0}
     - target: {fileID: 3708574032579584329, guid: 53713616c975b25469895ae9ac5536bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.74
+      value: 0.49
       objectReference: {fileID: 0}
     - target: {fileID: 3708574032579584329, guid: 53713616c975b25469895ae9ac5536bb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -27585,7 +27628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14215b463ddef24eb69c67247c92d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heal: 30
+  heal: -50
 --- !u!212 &1397812712
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -27645,7 +27688,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397812710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.29, y: 0.43, z: 0}
+  m_LocalPosition: {x: 7.72, y: 0.48, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

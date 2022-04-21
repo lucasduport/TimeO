@@ -8,13 +8,15 @@ public class HealObject : MonoBehaviour
     public int heal;
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.transform.GetComponent<PhotonView>().IsMine && collider.transform.CompareTag("Player"))
+        if ( collider.transform.CompareTag("Player"))
         {
-            PlayerHealth ph = collider.transform.GetComponent<PlayerHealth>();
-            ph.HealthModifications(heal);
+            if (collider.transform.GetComponent<PhotonView>().IsMine)
+            {
+                PlayerHealth ph = collider.transform.GetComponent<PlayerHealth>();
+                ph.HealthModifications(heal);
+            }
             //destruction du consommable seulement chez le joueur qui l'a pris
             Destroy(gameObject);
         }
-
     }
 }

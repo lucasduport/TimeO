@@ -159,9 +159,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 100
+  currentHealth: 0
   spriteRenderer: {fileID: 3204511318960415447}
   healthBar: {fileID: 5450126783458858703}
+  Killed: 0
 --- !u!95 &1991021293448975202
 Animator:
   serializedVersion: 3
@@ -295,6 +296,10 @@ PrefabInstance:
     - target: {fileID: 2703324557270913135, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2703324557270913135, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
+      propertyPath: m_TagString
+      value: CarlCam
       objectReference: {fileID: 0}
     - target: {fileID: 6709412257713253549, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
       propertyPath: m_RootOrder

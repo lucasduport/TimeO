@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
 using Photon.Pun;
 using UnityEngine.UI;
 
@@ -12,12 +13,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom("a");
+        PhotonNetwork.CreateRoom("b");
     }
 
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom("a");
+        PhotonNetwork.JoinRoom("b");
     }
 
     public override void OnJoinedRoom()
@@ -34,4 +35,5 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         }
     }
     
+
 }

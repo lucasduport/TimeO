@@ -15,6 +15,5 @@ public class WeaponObject : MonoBehaviour
             }
             Destroy(gameObject);
         }
-
     }
 }
