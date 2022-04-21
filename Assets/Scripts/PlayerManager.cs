@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
 
     private Rigidbody2D rb; //le rigidbody du player
@@ -68,8 +68,17 @@ public class PlayerMovement : MonoBehaviour
         {
             //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, LayerMask.NameToLayer("Player"));
-                                                        //player est le nom du layer avec qui les detections ne seront pas faites
-            
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            if (players.Length == 2)
+            {
+                GameObject otherPlayer = gameObject;
+                foreach (var p in players)
+                {
+                    if (p != gameObject) otherPlayer = p;
+                }
+                isGrounded = isGrounded || GetComponent<CapsuleCollider2D>().IsTouching(otherPlayer.GetComponent<CapsuleCollider2D>());
+            }
+
             //le joueur appuie sur q ou d pour se déplacer, on obtient la valeur du mouvement horizontale
             horizontalmove = Input.GetAxis("Horizontal") * 150 * Time.fixedDeltaTime;
 

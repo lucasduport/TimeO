@@ -15,6 +15,7 @@ public class CamManager : MonoBehaviour
         {
 
             PlayerCam.Clear();
+            GravityObject.GravityEnabled = false;
 
             if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
             PhotonNetwork.LoadLevel("Lobby");
