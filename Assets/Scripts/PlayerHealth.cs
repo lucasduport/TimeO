@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.XR;
 
 public class PlayerHealth : MonoBehaviour
@@ -94,7 +95,7 @@ public class PlayerHealth : MonoBehaviour
                 CamManager.PlayerCam[theOne.name].gameObject.SetActive(true);
                 CamManager.PlayerCam[theOther.name].gameObject.SetActive(false);
             }
-
+            GameObject.Find("SpectateText").GetComponent<Text>().color = new Color(1f,1f,1f,1f);
             CamManager.PlayerCam.Remove(gameObject.name);
         }
         else

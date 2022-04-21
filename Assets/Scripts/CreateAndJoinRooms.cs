@@ -34,6 +34,5 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel("Lobby");
         }
     }
-    
 
 }

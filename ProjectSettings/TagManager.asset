@@ -7,8 +7,7 @@ TagManager:
   - Spawner
   - Map
   - Enemy
-  - TimeoCam
-  - CarlCam
+  - Spectateur
   layers:
   - Default
   - TransparentFX
