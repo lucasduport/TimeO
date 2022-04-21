@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -58,10 +59,20 @@ public class PlayerMovement : MonoBehaviour
             Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
             Anim.SetBool("isJumping", !isGrounded);
             
+            if (Anim.GetBool("isHit")) Anim.SetBool("isHit",false);
             
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Hit();
+            }
             if (Input.GetButtonDown("Jump") && isGrounded && Math.Abs(rb.velocity.y) < 0.5)
             {
                 isJumping = true;
+            }
+
+            if (Input.GetKeyDown("g"))
+            {
+                Drop();
             }
         }
     }
@@ -81,9 +92,16 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, 0.05f);
         if (isJumping)
         {
-            //On pousse le rigidbody vers le haut
-            rb.AddForce(new Vector2(0f, 250f));
-            
+            if (GravityObject.GravityEnabled)
+            {
+                rb.AddForce(new Vector2(0f, 400f));
+                StartCoroutine(GravityTime());
+            }
+            else
+            {
+                //On pousse le rigidbody vers le haut
+                rb.AddForce(new Vector2(0f, 250f));
+            }
             isJumping = false;
         }
     }
@@ -105,6 +123,32 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+    }
+
+    void Hit()
+    {
+        Anim.SetBool("isHit",true);
+    }
+    void Drop()
+    {
+        if (Anim.GetBool("isBranch"))
+        {
+            Anim.SetBool("isBranch", false);
+            if (PTransform.localScale.x == -0.5f)
+            {
+                PhotonNetwork.Instantiate("Branch", PTransform.position + new Vector3(-0.7f, 0f, 0f),Quaternion.identity);
+            }
+            else
+            {
+                PhotonNetwork.Instantiate("Branch", PTransform.position + new Vector3(0.7f, 0f, 0f),Quaternion.identity);
+            }
+            
+        }
+    }
+    IEnumerator GravityTime()
+    {
+        yield return new WaitForSeconds(3.5f);
+        GravityObject.GravityEnabled = false;
     }
     /*
     private void OnDrawGizmos() 

@@ -12,7 +12,7 @@ public class GravityObject : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.transform.GetComponent<PhotonView>().IsMine && collider.transform.CompareTag("Player"))
+        if (collider.transform.CompareTag("Player"))
         {
             GravityEnabled = true;
             Destroy(gameObject);

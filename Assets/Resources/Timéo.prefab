@@ -226,6 +226,12 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: isJumping
+  - Type: 4
+    SynchronizeType: 2
+    Name: isHit
+  - Type: 4
+    SynchronizeType: 2
+    Name: isBranch
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
