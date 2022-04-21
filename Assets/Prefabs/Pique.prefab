@@ -10,13 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1745343460163629037}
   - component: {fileID: 1745343460163629026}
-<<<<<<< HEAD
   - component: {fileID: -5142165941498330957}
   - component: {fileID: 3517501811561528806}
-=======
-  - component: {fileID: 1745343460163629036}
-  - component: {fileID: -2194790221403961847}
->>>>>>> origin/jess
   m_Layer: 0
   m_Name: Pique
   m_TagString: Untagged
@@ -89,7 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-<<<<<<< HEAD
 --- !u!114 &-5142165941498330957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,10 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!68 &3517501811561528806
 EdgeCollider2D:
-=======
---- !u!58 &1745343460163629036
-CircleCollider2D:
->>>>>>> origin/jess
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -120,7 +110,6 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-<<<<<<< HEAD
   m_EdgeRadius: 0
   m_Points:
   - {x: -5.299311, y: -3.2830667}
@@ -136,19 +125,3 @@ CircleCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
-=======
-  serializedVersion: 2
-  m_Radius: 2.5
---- !u!114 &-2194790221403961847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745343460163629024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 889e855c51ca09f4ab6b7c835165eea9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> origin/jess

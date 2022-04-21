@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8543669464926493172}
   - component: {fileID: 6220659580606121636}
   m_Layer: 0
-  m_Name: gift
+  m_Name: Gift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,9 +97,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.07926941, y: 0}
   serializedVersion: 2
-  m_Radius: 2.5
+  m_Radius: 3.015256
 --- !u!114 &6220659580606121636
 MonoBehaviour:
   m_ObjectHideFlags: 0
