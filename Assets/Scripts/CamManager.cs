@@ -5,10 +5,12 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class CamManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public static Dictionary<string, Camera> PlayerCam = new Dictionary<string, Camera>();
+    public static bool GravityEnabled = false;
     public Text SpectateText;
     public GameObject GameOver;
 
@@ -17,7 +19,7 @@ public class CamManager : MonoBehaviour
         if (GameObject.FindGameObjectsWithTag("Player").Length == 0)
         {
             PlayerCam.Clear();
-            GravityObject.GravityEnabled = false;
+            GravityEnabled = false;
             SpectateText.color = new Color(1f, 1f, 1f, 0f);
             GameOver.SetActive(true);
         }

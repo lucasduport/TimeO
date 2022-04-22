@@ -7,14 +7,12 @@ using System.Threading;
 public class GravityObject : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static bool GravityEnabled = false;
     
-
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.transform.CompareTag("Player"))
         {
-            GravityEnabled = true;
+            CamManager.GravityEnabled = true;
             Destroy(gameObject);
         }
 

@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
     public Camera m_cam;
     public Canvas canvas;
     private PhotonView _view;
-    
+
 
     private void Start()
     {
@@ -87,7 +87,7 @@ public class PlayerManager : MonoBehaviour
             Anim.SetBool("isJumping", !isGrounded);
             
             //si l'orbe de gravité est prise alors un timer se lance jusqu'à la fin
-            if (GravityObject.GravityEnabled) StartCoroutine(GravityTime());
+            if (CamManager.GravityEnabled) StartCoroutine(GravityTime());
             
             //isHit doit être vraie seulement une frame car l'anim se joue jusqu'à la fin quoiqu'il arrive
             if (Anim.GetBool("isHit")) Anim.SetBool("isHit",false);
@@ -123,7 +123,7 @@ public class PlayerManager : MonoBehaviour
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, 0.05f);
         if (isJumping)
         {
-            if (GravityObject.GravityEnabled)
+            if (CamManager.GravityEnabled)
             {
                 rb.AddForce(new Vector2(0f, 400f));
             }
@@ -178,7 +178,7 @@ public class PlayerManager : MonoBehaviour
     IEnumerator GravityTime()
     {
         yield return new WaitForSeconds(3.5f);
-        GravityObject.GravityEnabled = false;
+        CamManager.GravityEnabled = false;
     }
     
     /*

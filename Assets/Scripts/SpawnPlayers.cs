@@ -34,7 +34,7 @@ public class SpawnPlayers : MonoBehaviour
         }
         else
         {
-            PhotonNetwork.Instantiate(Player2Prefab.name, SpawnLocation.position, Quaternion.identity);
+            PhotonNetwork.Instantiate(Player2Prefab.name, SpawnLocation.position- new Vector3(2f,0f,0f), Quaternion.identity);
         }
     }
 }
