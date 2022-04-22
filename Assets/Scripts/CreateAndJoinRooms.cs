@@ -21,6 +21,11 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom("b");
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     public override void OnJoinedRoom()
     {
         //chargement du premier niveau sur le server si il y a seulement 1 autre joueur

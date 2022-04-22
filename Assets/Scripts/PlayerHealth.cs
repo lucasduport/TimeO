@@ -31,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         if (!Killed && currentHealth <= 0)
         {
+            gameObject.GetComponent<Animator>().SetBool("killed",true);
             Kill();
         }
     }
@@ -69,9 +70,8 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Kill()
+    void Kill()
     {
-        gameObject.GetComponent<Animator>().SetBool("killed",true);
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         
         if (PhotonNetwork.LocalPlayer.NickName == "Timéo")
@@ -104,7 +104,6 @@ public class PlayerHealth : MonoBehaviour
             PhotonNetwork.Destroy(gameObject);
         }
     }
-
     public IEnumerator HandleInvicibilityDelay()
     {
         yield return new WaitForSeconds(3f);
