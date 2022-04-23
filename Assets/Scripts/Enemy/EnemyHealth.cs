@@ -6,7 +6,7 @@ using UnityEngine.XR;
 public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    public int currentHealth;
+    public static int currentHealth;
     
     public HealthBar healthBar;
     private Transform ht;

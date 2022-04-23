@@ -8,6 +8,10 @@ TagManager:
   - Map
   - Enemy
   - Spectateur
+  - TimeoCam
+  - Bullet
+  - CarlCam
+  - EnemyLimit
   layers:
   - Default
   - TransparentFX

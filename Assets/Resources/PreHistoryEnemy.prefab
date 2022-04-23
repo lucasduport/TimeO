@@ -152,6 +152,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 3230884986805979972}
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  IsCloseRange: 0
+  IsMidRange: 0
+  CloseRangeHautGauche: {fileID: 0}
+  CloseRangeBasDroite: {fileID: 0}
+  MidRangeHautGauche: {fileID: 0}
+  MidRangeBasDroite: {fileID: 0}
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  Player: {fileID: 0}
+  Char: 0
+  CH: 0
+  ChampDeVisionHG: {fileID: 0}
+  ChampDeVisionBD: {fileID: 0}
+  InSightRange: 0
 --- !u!95 &7812242634775711777
 Animator:
   serializedVersion: 3
@@ -251,7 +269,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 0
   healthBar: {fileID: 5560864068410671398}
 --- !u!222 &4190302730198790196
 CanvasRenderer:
@@ -529,7 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98fc32e5fa6c754b8cbb1d9ef84b560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damages: 30
+  DamageParCoup: 20
 --- !u!1 &3989720957483352416
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +704,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5542480001941482863
 MonoBehaviour:
   m_ObjectHideFlags: 0
