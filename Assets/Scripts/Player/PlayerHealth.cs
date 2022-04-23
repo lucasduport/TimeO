@@ -51,8 +51,7 @@ public class PlayerHealth : MonoBehaviour
 
             currentHealth += number;
 
-            //pas dépasser la valeur min et max
-            if (currentHealth < 0) currentHealth = 0;
+            //pas dépasser la valeur max
             if (currentHealth > maxHealth) currentHealth = maxHealth;
 
             healthBar.SetHealth(currentHealth);
@@ -87,20 +86,20 @@ public class PlayerHealth : MonoBehaviour
 
             if (theOne.name == gameObject.name)
             {
-                CamManager.PlayerCam[theOther.name].gameObject.SetActive(true);
-                CamManager.PlayerCam[theOne.name].gameObject.SetActive(false);
+                POVManager.PlayerCam[theOther.name].gameObject.SetActive(true);
+                POVManager.PlayerCam[theOne.name].gameObject.SetActive(false);
             }
             else
             {
-                CamManager.PlayerCam[theOne.name].gameObject.SetActive(true);
-                CamManager.PlayerCam[theOther.name].gameObject.SetActive(false);
+                POVManager.PlayerCam[theOne.name].gameObject.SetActive(true);
+                POVManager.PlayerCam[theOther.name].gameObject.SetActive(false);
             }
             GameObject.Find("SpectateText").GetComponent<Text>().color = new Color(1f,1f,1f,1f);
-            CamManager.PlayerCam.Remove(gameObject.name);
+            POVManager.PlayerCam.Remove(gameObject.name);
         }
         else
         {
-            CamManager.PlayerCam.Clear();
+            POVManager.PlayerCam.Clear();
             PhotonNetwork.Destroy(gameObject);
         }
     }

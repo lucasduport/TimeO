@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEditor;
 using UnityEngine;
 
-public class MobController : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
 
     private Rigidbody2D rb; //le rigidbody du mob
@@ -75,16 +75,16 @@ public class MobController : MonoBehaviour
     //de retourner l'image si besoin
     void Flip(float _rbvelocity)
     {
-        if (_rbvelocity < -0.05f)
+        if (_rbvelocity < -0.1f && MTransform.localScale.x < 0)
         {
             //la scale est inversée, l'image est retournée
-            MTransform.localScale = new Vector3(0.5f,MTransform.localScale.y,MTransform.localScale.z);
+            MTransform.localScale = new Vector3(-MTransform.localScale.x,MTransform.localScale.y,MTransform.localScale.z);
         }
         else 
         {
-            if (_rbvelocity > 0.05f)
+            if (_rbvelocity > 0.1f && MTransform.localScale.x > 0)
             {
-                MTransform.localScale = new Vector3(-0.5f,MTransform.localScale.y,MTransform.localScale.z);
+                MTransform.localScale = new Vector3(-MTransform.localScale.x,MTransform.localScale.y,MTransform.localScale.z);
             }
         }
 

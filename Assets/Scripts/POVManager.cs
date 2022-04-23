@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CamManager : MonoBehaviour
+public class POVManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public static Dictionary<string, Camera> PlayerCam = new Dictionary<string, Camera>();

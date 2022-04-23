@@ -24,6 +24,8 @@ public class PlayerManager : MonoBehaviour
     
     private bool isJumping;
     private bool isGrounded;
+
+    public GameObject branch;
     
     public Camera m_cam;
     public Canvas canvas;
@@ -38,7 +40,7 @@ public class PlayerManager : MonoBehaviour
         
         _view = GetComponent<PhotonView>();
         
-        CamManager.PlayerCam.Add(gameObject.name,m_cam);
+        POVManager.PlayerCam.Add(gameObject.name,m_cam);
         
         //méthode de PhotonView qui permait de savoir si l'on est bien sur la vue du joueur concerné
         if (_view.IsMine)
@@ -87,11 +89,14 @@ public class PlayerManager : MonoBehaviour
             Anim.SetBool("isJumping", !isGrounded);
             
             //si l'orbe de gravité est prise alors un timer se lance jusqu'à la fin
-            if (CamManager.GravityEnabled) StartCoroutine(GravityTime());
+            if (POVManager.GravityEnabled) StartCoroutine(GravityTime());
             
             //isHit doit être vraie seulement une frame car l'anim se joue jusqu'à la fin quoiqu'il arrive
             if (Anim.GetBool("isHit")) Anim.SetBool("isHit",false);
-            
+
+            //active l'enfant du player "branch" qui detecte les collisions avec les ennemis (système de coup)
+            branch.SetActive(Anim.GetCurrentAnimatorStateInfo(0).IsName("hit_branch"));
+
             if (Input.GetButtonDown("Fire1"))
             {
                 Hit();
@@ -123,7 +128,7 @@ public class PlayerManager : MonoBehaviour
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, 0.05f);
         if (isJumping)
         {
-            if (CamManager.GravityEnabled)
+            if (POVManager.GravityEnabled)
             {
                 rb.AddForce(new Vector2(0f, 400f));
             }
@@ -140,16 +145,16 @@ public class PlayerManager : MonoBehaviour
     //de retourner l'image si besoin
     void Flip(float _rbvelocity)
     {
-        if (_rbvelocity < -0.1f)
+        if (_rbvelocity < -0.1f && PTransform.localScale.x > 0)
         {
             //la scale est inversée, l'image est retournée
-            PTransform.localScale = new Vector3(-0.5f,PTransform.localScale.y,PTransform.localScale.z);
+            PTransform.localScale = new Vector3(-PTransform.localScale.x,PTransform.localScale.y,PTransform.localScale.z);
         }
         else 
         {
-            if (_rbvelocity > 0.1f)
+            if (_rbvelocity > 0.1f && PTransform.localScale.x < 0)
             {
-                PTransform.localScale = new Vector3(0.5f,PTransform.localScale.y,PTransform.localScale.z);
+                PTransform.localScale = new Vector3(-PTransform.localScale.x,PTransform.localScale.y,PTransform.localScale.z);
             }
         }
 
@@ -178,7 +183,7 @@ public class PlayerManager : MonoBehaviour
     IEnumerator GravityTime()
     {
         yield return new WaitForSeconds(3.5f);
-        CamManager.GravityEnabled = false;
+        POVManager.GravityEnabled = false;
     }
     
     /*

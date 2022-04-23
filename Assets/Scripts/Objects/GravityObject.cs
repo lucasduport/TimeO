@@ -12,7 +12,7 @@ public class GravityObject : MonoBehaviour
     {
         if (collider.transform.CompareTag("Player"))
         {
-            CamManager.GravityEnabled = true;
+            POVManager.GravityEnabled = true;
             Destroy(gameObject);
         }
 

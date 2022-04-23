@@ -39,6 +39,7 @@ Transform:
   - {fileID: 8048559128343390082}
   - {fileID: 7072645367068485704}
   - {fileID: 3290048074794719770}
+  - {fileID: 5639029102349148696}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -144,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 8048559128343390082}
   Anim: {fileID: 1991021293448975202}
+  branch: {fileID: 7898674839629165521}
   m_cam: {fileID: 4289584902143866707}
   canvas: {fileID: 3424609496694478503}
 --- !u!114 &6634860395945203157
@@ -233,6 +235,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: isHit
+  - Type: 4
+    SynchronizeType: 0
+    Name: killed
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -356,6 +361,73 @@ Transform:
 Camera:
   m_CorrespondingSourceObject: {fileID: 341184120491242422, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
   m_PrefabInstance: {fileID: 4556388948649936101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4706319590521873865
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 532158055080839755}
+    m_Modifications:
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.241
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.579
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.156979
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3228392988265535000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_Name
+      value: weaponCollider
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+--- !u!1 &7898674839629165521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3228392988265535000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+  m_PrefabInstance: {fileID: 4706319590521873865}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5639029102349148696 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1085912511399118801, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+  m_PrefabInstance: {fileID: 4706319590521873865}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7909775862905928876
 PrefabInstance:
