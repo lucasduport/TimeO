@@ -105,7 +105,7 @@ public class PlayerHealth : MonoBehaviour
     }
     public IEnumerator HandleInvicibilityDelay()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.5f);
         isInvicible = false;
     }
 }

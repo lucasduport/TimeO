@@ -166,18 +166,35 @@ public class PlayerManager : MonoBehaviour
     }
     void Drop()
     {
-        if (Anim.GetBool("isBranch"))
+        if (Anim.GetBool("isStone"))
         {
-            Anim.SetBool("isBranch", false);
+            Anim.SetBool("isStone", false);
             if (PTransform.localScale.x == -0.5f)
             {
-                PhotonNetwork.Instantiate("Branch", PTransform.position + new Vector3(-0.7f, 0f, 0f),Quaternion.identity);
+                PhotonNetwork.Instantiate("Stone", PTransform.position + new Vector3(-0.7f, 0f, 0f),Quaternion.identity);
             }
             else
             {
-                PhotonNetwork.Instantiate("Branch", PTransform.position + new Vector3(0.7f, 0f, 0f),Quaternion.identity);
+                PhotonNetwork.Instantiate("Stone", PTransform.position + new Vector3(0.7f, 0f, 0f),Quaternion.identity);
             }
-            
+        }
+        else
+        {
+            if (Anim.GetBool("isBranch"))
+            {
+                Anim.SetBool("isBranch", false);
+                if (PTransform.localScale.x == -0.5f)
+                {
+                    PhotonNetwork.Instantiate("Branch", PTransform.position + new Vector3(-0.7f, 0f, 0f),
+                        Quaternion.identity);
+                }
+                else
+                {
+                    PhotonNetwork.Instantiate("Branch", PTransform.position + new Vector3(0.7f, 0f, 0f),
+                        Quaternion.identity);
+                }
+
+            }
         }
     }
     IEnumerator GravityTime()

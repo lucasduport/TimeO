@@ -8,6 +8,9 @@ TagManager:
   - Map
   - Enemy
   - Spectateur
+  - TimeoCam
+  - CarlCam
+  - Stone
   layers:
   - Default
   - TransparentFX
