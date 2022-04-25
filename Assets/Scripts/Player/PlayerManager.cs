@@ -34,6 +34,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+
         //Récupération des composants
         rb = GetComponent<Rigidbody2D>();
         PTransform = GetComponent<Transform>();

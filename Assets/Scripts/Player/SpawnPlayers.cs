@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class SpawnPlayers : MonoBehaviour
     public GameObject Player2Prefab;
 
     public Transform SpawnLocation;
+    public Transform SpawnLimitPointTransform;
+
     private bool isTimeo;
 
     // Start is called before the first frame update
@@ -31,7 +34,7 @@ public class SpawnPlayers : MonoBehaviour
                     isTimeo = true;
                 }
             }
-
+            
             //si le joueur est le second arrivé sur le server, il aura le style du perso2 et non de Timéo
             if (!isTimeo)
             {
@@ -53,5 +56,5 @@ public class SpawnPlayers : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject.SetActive(true);
         POVManager.Spectate = true;
     }
-    
+
 }
