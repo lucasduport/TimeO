@@ -27,29 +27,28 @@ public class EnemyManager : MonoBehaviour
     
 
     // variables patrouille
-    private float speed = 3/2;
-    public Transform[] waypoints;
-    private Transform target;
-    private int destpoint = 0;
+    public Transform[] waypoints; // contient les deux bornes qui délimitent la zone de patrouille du mob
+    private Vector3 target; // point ciblé pour la patrouille.Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
+    private int destpoint = 0; // coefficient qui prend les valeurs 0 ou 1 pour choisir la target 
 
     // detection du joueur
-    public bool IsCloseRange;
+    public bool IsCloseRange; // la détection se fait grâce à Overlaparea entre le coin haut gauche et bas droite de la zone
     public bool IsMidRange;
-
-
-    public Transform CloseRangeHautGauche;
+    public Transform CloseRangeHautGauche; 
     public Transform CloseRangeBasDroite;
     public Transform MidRangeHautGauche;
     public Transform MidRangeBasDroite;
-    public LayerMask PlayerLayer;
-    public Transform Player;
 
+    public LayerMask PlayerLayer; // permet d'avoir le layer du player pour la détection de joueur dans la close/mid range, afin de ne pas détecter le sol par ex.
+    public Transform Player; // transform de timeo
+    public Vector3 PlDest; //pour faire voler le joueur en chargeant
+    private Vector3 Destination; //récupère le point à viser lors de la charge/attaque corps à corps
     // choix de l'action
-    private System.Random rand = new System.Random();
+    private System.Random rand = new System.Random(); // random pour choisir entre charge et attaque càc
     private float randomFloat;
-    public float Char; //Charge
-    private char LastAttack;
-    public int CH = EnemyHealth.currentHealth;
+    public float Char; //coefficient initialisé à 1 qui augmente si la charge est efficace et inversement
+    private char LastAttack; //garde en mémoire la dernière attaque afin de faire varier Char
+    public int CH = EnemyHealth.currentHealth; // récupère la vie de l'ennemi pour avoir l'efficacité des attaques
 
 
     //delimitation champ de vision de l'ennemi
@@ -57,44 +56,52 @@ public class EnemyManager : MonoBehaviour
     public Transform ChampDeVisionHG;
     public Transform ChampDeVisionBD;
 
-    public bool InSightRange;
+    public bool InSightRange;// champ de vision. Fonctionne comme IsCloseRange
 
     void Patroll()
     {
-        Vector3 dir = target.position - transform.position;
-        transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
-
-        if (Vector3.Distance(transform.position,target.position) < 0.3f)
+      
+        transform.position = Vector3.MoveTowards(transform.position, target,0.001f);// bouge jusqu'à la target
+        
+        if (Vector3.Distance(transform.position,target) < 0.3f)
         {
-            destpoint = (destpoint + 1) % 2;
-            target = waypoints[destpoint];
-
+            destpoint = (destpoint + 1) % 2; // changement de target lorsqu'il en atteint une
+            target = waypoints[destpoint].position;
+            
         }
+        
     }
-    
+    void Tempo ()
+    {
+
+        Destination = new Vector3(Player.position.x, -1f, 0); 
+        transform.position = Vector3.MoveTowards(transform.position, Destination, 0.000001f); // fait un petit mouv pour faire une pause
+    }
     
     
     void Charge()
     {
+        Destination = new Vector3(Player.position.x, -1f, 0);
 
-        Vector3 dire = Player.position - transform.position;
-        transform.Translate(dire.normalized * speed * 2 * Time.deltaTime, Space.World);
+        transform.position = Vector3.MoveTowards(transform.position, Destination, 0.005f); //mouvement rapide 
+        if (Vector3.Distance(transform.position, Destination) < 0.3f)
+        {
+            //HitPlayer
+            /*PlDest = new Vector3(Player.position.x - 0.1f, Player.position.y + 0.1f, 0);
+            Player.position = Vector3.MoveTowards(Player.position, PlDest, 0.01f);
+            Invoke("Tempo", 5);*/
+            // cette partie pose problème car il ne fait pas le test pendant mais après le déplacement
+        }
+
+
     }
     void AttaqueCorpsACorps()
     {
         
-        Vector3 dire = Player.position - transform.position;
-        transform.Translate(dire.normalized * speed * Time.deltaTime, Space.World);
-
-
+        Destination = new Vector3(Player.position.x, -1f, 0);
+        transform.position = Vector3.MoveTowards(transform.position, Destination, 0.002f); // mouvement moyen
+        
     }
-    IEnumerator LoadDelayed()
-    {
-        yield return new WaitForSeconds(2);
-        Charge();
-    }
-
-
 
     private void Start()
     {
@@ -102,15 +109,17 @@ public class EnemyManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         MTransform = GetComponent<Transform>();
         Anim = GetComponent<Animator>();
-
+        
         //patrouille
-        target = waypoints[0];
+        target = waypoints[0].position;
+
+        
     }
 
     void Update()
     {
         //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, layermask);
+        /*isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, layermask);
                                                         //Mob est le nom du layer avec qui les detections ne seront pas faites
                                                      
         horizontalmove = 0 * 150 * Time.fixedDeltaTime;
@@ -121,16 +130,17 @@ public class EnemyManager : MonoBehaviour
 
         isJumping = false;
 
-
-
+        */
+        Player = PlayerManager.PTransform; //récupère transform du joueur
 
         IsCloseRange = Physics2D.OverlapArea(CloseRangeHautGauche.position, CloseRangeBasDroite.position, PlayerLayer);
         IsMidRange = Physics2D.OverlapArea(MidRangeHautGauche.position, MidRangeBasDroite.position, PlayerLayer);
         InSightRange = Physics2D.OverlapArea(ChampDeVisionHG.position, ChampDeVisionBD.position, PlayerLayer);
+        
 
-
-        if(EnemyHealth.currentHealth < CH)
+        if (EnemyHealth.currentHealth < CH) //teste efficacité du coup
         {
+            CH = EnemyHealth.currentHealth;
             if (LastAttack == 'a')
             {
                 Char += (1 / 10);
@@ -142,41 +152,43 @@ public class EnemyManager : MonoBehaviour
 
         }
 
-        if (!InSightRange)
+        if (!InSightRange) // si le joueur n'est pas sur la plateforme de l'ennemi ce dernier patrouille
         {
             Patroll();
         }
-        else if (!IsMidRange)
+        else if (!IsMidRange) //si le joueur est loin l'enni fait une pause et charge
         {
-            StartCoroutine(LoadDelayed());
-            LastAttack = 'c';
+            Invoke("Charge",2);
+            LastAttack = 'c'; // la dernière attaque devient une charge
         }
-        else if (IsCloseRange)
+        else if (IsCloseRange) // si le joueur et contact l'ennemi lance une attaque corps à corps
         {
            
             AttaqueCorpsACorps();
-            LastAttack = 'a';
+            LastAttack = 'a';// la dernière attaque devient une attaque corps à corps
         }
-        else
+        else // si le joueur est mid range 
         {
             randomFloat = (float)rand.NextDouble();
-            if (randomFloat * Char < 0.5) 
+            if (randomFloat * Char < 0.5) // on multiplie le nombre aléatoire par char ce qui a tendance à renvoyer le meilleur coup mais pas tout le temps non plus
             {
                 AttaqueCorpsACorps();
                 LastAttack = 'a';
             }
             else
             {
-                StartCoroutine(LoadDelayed());
+                Charge();
                 LastAttack = 'c';
             }
 
         }
+        Invoke("Tempo", 3); // pause à la fin
 
-        
+
+
     }
     // Update is called once per frame
-    void FixedUpdate()
+    /*void FixedUpdate()
     {
         MoveMob(horizontalmove);
 
@@ -216,14 +228,14 @@ public class EnemyManager : MonoBehaviour
         }
 
     }
-    /*// Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
-    private void OnDrawGizmos()
+    */// Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position,0.3f);
-    }*/
+    }
 
-
+    */
 
 
     

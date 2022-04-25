@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
 {
 
     private Rigidbody2D rb; //le rigidbody du player
-    private Transform PTransform; //transform du player
+    public static Transform PTransform; //transform du player
 
     public Transform groundCheck; //transform enfant du player qui détecte les collisions avec le sol
 

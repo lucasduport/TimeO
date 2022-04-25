@@ -44951,6 +44951,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8854563928667544465, guid: 40b0211db28edd541881135aa6f8f30f, type: 3}
+      propertyPath: ObjectsPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 639398116388588925, guid: 61f7be9b3682f734a8bc3e865b195ae8, type: 3}
     - target: {fileID: 8854563928667544467, guid: 40b0211db28edd541881135aa6f8f30f, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
@@ -45261,6 +45265,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8854563928667544465, guid: 40b0211db28edd541881135aa6f8f30f, type: 3}
+      propertyPath: ObjectsPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 3708574032579584333, guid: 53713616c975b25469895ae9ac5536bb, type: 3}
     - target: {fileID: 8854563928667544467, guid: 40b0211db28edd541881135aa6f8f30f, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
@@ -46995,7 +47003,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1187035837}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.380001, y: -1.9, z: 0}
+  m_LocalPosition: {x: -15.380001, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1931607911}
@@ -50376,7 +50384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036757355}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.53, y: -1.83, z: 0}
+  m_LocalPosition: {x: -22.53, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1931607911}
