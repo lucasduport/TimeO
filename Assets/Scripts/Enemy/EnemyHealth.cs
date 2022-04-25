@@ -36,7 +36,7 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth += number;
         Anim.SetInteger("health",currentHealth);
-        if (currentHealth < 0)
+        if (currentHealth < 0 && GetComponent<PhotonView>().IsMine)
         {
             PhotonNetwork.Destroy(gameObject);
         }

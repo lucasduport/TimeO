@@ -34,13 +34,13 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-
         //Récupération des composants
         rb = GetComponent<Rigidbody2D>();
         PTransform = GetComponent<Transform>();
         
         _view = GetComponent<PhotonView>();
         POVManager.PlayerCam.Add(gameObject.name,m_cam);
+        
         
         //méthode de PhotonView qui permait de savoir si l'on est bien sur la vue du joueur concerné
         if (_view.IsMine)
@@ -58,7 +58,12 @@ public class PlayerManager : MonoBehaviour
             if (_view.IsMine) PhotonNetwork.Destroy(gameObject);
             POVManager.Spectate = true;
         }
-
+        
+        if (Input.GetKeyDown((KeyCode)27))
+        {
+            Menu.MenuPause.SetActive(true);
+        }
+        
         if (_view.IsMine)
         {
             //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck

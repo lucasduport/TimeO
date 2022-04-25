@@ -14,6 +14,7 @@ public class POVManager : MonoBehaviour
     public Text SpectateText;
     public GameObject GameOver;
     public static bool Spectate = false;
+    
 
     private void Update()
     {
@@ -41,7 +42,6 @@ public class POVManager : MonoBehaviour
             }
         }
     }
-    
 
     IEnumerator GravityTime()
     {
@@ -49,16 +49,5 @@ public class POVManager : MonoBehaviour
         GravityEnabled = false;
     }
 
-    public void LoadMainMenu()
-    {
-        GameOver.SetActive(false);
-        if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LoadLevel("Lobby");
-    }
-    
-    IEnumerator WaitForCam()
-    {
-        yield return new WaitForSeconds(0.5f); 
-        GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject.SetActive(true);
-    }
+
 }
