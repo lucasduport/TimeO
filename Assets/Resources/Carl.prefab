@@ -146,7 +146,6 @@ MonoBehaviour:
   groundCheck: {fileID: 8048559128343390082}
   Anim: {fileID: 1991021293448975202}
   branch: {fileID: 7898674839629165521}
-  MenuPause: {fileID: 0}
   m_cam: {fileID: 4289584902143866707}
   canvas: {fileID: 3424609496694478503}
 --- !u!114 &6634860395945203157
