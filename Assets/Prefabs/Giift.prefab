@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8543669464926493178}
   - component: {fileID: 8543669464926493172}
   - component: {fileID: 6220659580606121636}
+  - component: {fileID: 7372242712943798347}
   m_Layer: 0
-  m_Name: Gift
+  m_Name: Giift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8543669464926493176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: -3, z: 6.7284045}
+  m_LocalPosition: {x: 7, y: -3, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -73,12 +74,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c5d5e56a82a6aa34395b1d1447d62eda, type: 3}
+  m_Sprite: {fileID: -394747630133099556, guid: a3dfd56085ea9974e8d275f8467c1f12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 11.84, y: 11.52}
+  m_Size: {x: 4, y: 2.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -112,3 +113,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf03d8738e3ce64b9cba61cddb8f900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7372242712943798347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543669464926493176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

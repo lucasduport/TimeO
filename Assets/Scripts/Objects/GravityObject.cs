@@ -13,7 +13,7 @@ public class GravityObject : MonoBehaviour
         if (collider.transform.CompareTag("Player"))
         {
             POVManager.GravityEnabled = true;
-            Destroy(gameObject);
+            if (gameObject.GetComponent<PhotonView>().IsMine) PhotonNetwork.Destroy(gameObject);
         }
 
     }

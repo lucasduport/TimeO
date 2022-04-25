@@ -13,24 +13,52 @@ public class POVManager : MonoBehaviour
     public static bool GravityEnabled = false;
     public Text SpectateText;
     public GameObject GameOver;
+    public static bool Spectate = false;
 
     private void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("Player").Length == 0)
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        if (Spectate && players.Length != 0)
+        {
+            SpectateText.color = new Color(1f, 1f, 1f, 1f);
+            GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject.SetActive(true);
+        }
+        
+        if (players.Length == 0)
         {
             PlayerCam.Clear();
             GravityEnabled = false;
+            Spectate = false;
             SpectateText.color = new Color(1f, 1f, 1f, 0f);
             GameOver.SetActive(true);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            if (GravityEnabled)
+            {
+                StartCoroutine(GravityTime());
+            }
         }
     }
     
+
+    IEnumerator GravityTime()
+    {
+        yield return new WaitForSeconds(3.5f);
+        GravityEnabled = false;
+    }
+
     public void LoadMainMenu()
     {
         GameOver.SetActive(false);
         if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel("Lobby");
     }
+    
+    IEnumerator WaitForCam()
+    {
+        yield return new WaitForSeconds(0.5f); 
+        GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject.SetActive(true);
+    }
 }
-
-

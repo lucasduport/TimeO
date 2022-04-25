@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
         if (!Killed && currentHealth <= 0)
         {
             gameObject.GetComponent<Animator>().SetBool("killed",true);
-            Kill();
+            Killed = true;
         }
     }
 
@@ -68,41 +68,7 @@ public class PlayerHealth : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
         }
     }
-
-    void Kill()
-    {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        
-        if (PhotonNetwork.LocalPlayer.NickName == "Timéo")
-        {
-            //je reset le nickname pour pas que des anciens Timéo inactifs fassent passer que Timéo est dans la room
-            PhotonNetwork.LocalPlayer.NickName = " ";
-        }
-
-        if (players.Length == 2)
-        {
-            GameObject theOne = players[0];
-            GameObject theOther = players[1];
-
-            if (theOne.name == gameObject.name)
-            {
-                POVManager.PlayerCam[theOther.name].gameObject.SetActive(true);
-                POVManager.PlayerCam[theOne.name].gameObject.SetActive(false);
-            }
-            else
-            {
-                POVManager.PlayerCam[theOne.name].gameObject.SetActive(true);
-                POVManager.PlayerCam[theOther.name].gameObject.SetActive(false);
-            }
-            GameObject.Find("SpectateText").GetComponent<Text>().color = new Color(1f,1f,1f,1f);
-            POVManager.PlayerCam.Remove(gameObject.name);
-        }
-        else
-        {
-            POVManager.PlayerCam.Clear();
-            PhotonNetwork.Destroy(gameObject);
-        }
-    }
+    
     public IEnumerator HandleInvicibilityDelay()
     {
         yield return new WaitForSeconds(2.5f);

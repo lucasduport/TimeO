@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using Photon.Pun;
 public class WeaponBranch : MonoBehaviour
@@ -12,9 +14,23 @@ public class WeaponBranch : MonoBehaviour
             {
                 Animator ph = collider.transform.GetComponent<Animator>();
                 ph.SetBool("isBranch", true);
-                PhotonNetwork.Destroy(gameObject);
             }
-            
+            gameObject.transform.localScale = Vector3.zero;
+            foreach (var c in gameObject.GetComponents<Collider2D>())
+            {
+                c.enabled = false;
+            }
+            StartCoroutine(Destruction());
+        }
+    }
+
+    IEnumerator Destruction()
+    {
+        yield return new WaitForSeconds(1);
+        if (gameObject.GetComponent<PhotonView>().IsMine &&
+            gameObject.transform.localScale == Vector3.zero)
+        {
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }

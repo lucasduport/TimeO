@@ -215,7 +215,7 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isFiring
   m_SynchronizeLayers:
   - SynchronizeType: 0
