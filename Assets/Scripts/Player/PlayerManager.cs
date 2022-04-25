@@ -26,6 +26,7 @@ public class PlayerManager : MonoBehaviour
     private bool isGrounded;
 
     public GameObject branch;
+    public GameObject MenuPause;
     
     public Camera m_cam;
     public Canvas canvas;
@@ -110,6 +111,11 @@ public class PlayerManager : MonoBehaviour
             {
                 Drop();
             }
+	    if (Input.GetKeyDown("p"))
+            {
+                Pause();
+		
+            }
         }
     }
 
@@ -193,5 +199,12 @@ public class PlayerManager : MonoBehaviour
        Gizmos.DrawWireSphere(groundCheck.position,0.3f); 
     }
     */
+	void Pause()
+    {
+	MenuPause=GameObject.FindGameObjectsWithTag("MenuPause")[0];
+        Debug.Log("Pause");
+        MenuPause.SetActive(true);
+    }
+
 
 }

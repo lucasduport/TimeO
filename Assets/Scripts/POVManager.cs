@@ -13,6 +13,7 @@ public class POVManager : MonoBehaviour
     public static bool GravityEnabled = false;
     public Text SpectateText;
     public GameObject GameOver;
+    public GameObject MenuPause;
 
     private void Update()
     {
@@ -30,6 +31,17 @@ public class POVManager : MonoBehaviour
         GameOver.SetActive(false);
         if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel("Lobby");
+    }
+
+    public void Resume()
+    {
+        MenuPause.SetActive(false);
+
+    }
+    public void Quit()
+    {
+        Application.Quit();
+
     }
 }
 

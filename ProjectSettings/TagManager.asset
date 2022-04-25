@@ -8,6 +8,9 @@ TagManager:
   - Map
   - Enemy
   - Spectateur
+  - TimeoCam
+  - CarlCam
+  - MenuPause
   layers:
   - Default
   - TransparentFX
