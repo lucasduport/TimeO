@@ -9,10 +9,13 @@ public class EnemyHealth : MonoBehaviour
     public int currentHealth;
     
     public HealthBar healthBar;
+    private Animator Anim;
     private Transform ht;
     void Start()
     {
         currentHealth = maxHealth;
+        Anim = GetComponent<Animator>();
+        Anim.SetInteger("health",maxHealth);
     }
 
     void Update()
@@ -32,6 +35,7 @@ public class EnemyHealth : MonoBehaviour
     public void HealthModifications(int number)
     {
         currentHealth += number;
+        Anim.SetInteger("health",currentHealth);
         if (currentHealth < 0)
         {
             PhotonNetwork.Destroy(gameObject);

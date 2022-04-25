@@ -13,12 +13,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom("b");
+        PhotonNetwork.CreateRoom("j");
     }
 
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom("b");
+        PhotonNetwork.JoinRoom("j");
     }
 
     public void QuitGame()
@@ -29,15 +29,13 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         //chargement du premier niveau sur le server si il y a seulement 1 autre joueur
-        if (PhotonNetwork.PlayerList.Length <= 2)
-        {
-            PhotonNetwork.LoadLevel("Level01");
-        }
-        else
-        {
-            PhotonNetwork.LeaveRoom();
-            PhotonNetwork.LoadLevel("Lobby");
-        }
+        PhotonNetwork.LoadLevel("Level01");
     }
 
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        
+        PhotonNetwork.LocalPlayer.NickName = " ";
+    }
 }

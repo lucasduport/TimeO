@@ -10,7 +10,11 @@ TagManager:
   - Spectateur
   - TimeoCam
   - CarlCam
+<<<<<<< HEAD
   - MenuPause
+=======
+  - Stone
+>>>>>>> 49d26483711c4e7a16fc25cacfdc9cc7f18bd8d4
   layers:
   - Default
   - TransparentFX

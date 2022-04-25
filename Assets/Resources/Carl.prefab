@@ -126,7 +126,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 1b9f734c2ff2a954895390159d26c7d6, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -237,8 +237,11 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: isHit
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: killed
+  - Type: 4
+    SynchronizeType: 2
+    Name: isStone
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -305,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2703324557270913135, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
       propertyPath: m_TagString
-      value: CarlCam
+      value: PlayerCam
       objectReference: {fileID: 0}
     - target: {fileID: 6709412257713253549, guid: 2a34528a9c3c3e041888ba794bc8aa67, type: 3}
       propertyPath: m_RootOrder

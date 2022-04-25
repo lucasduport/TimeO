@@ -15,8 +15,11 @@ public class HealObject : MonoBehaviour
                 PlayerHealth ph = collider.transform.GetComponent<PlayerHealth>();
                 ph.HealthModifications(heal);
             }
-            //destruction du consommable seulement chez le joueur qui l'a pris
-            Destroy(gameObject);
+
+            if (gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 }

@@ -9,11 +9,8 @@ public class HitPlayers : MonoBehaviour
     {
         if (collider.transform.CompareTag("Enemy"))
         {
-            if (collider.transform.GetComponent<PhotonView>().IsMine)
-            {
-                EnemyHealth eh = collider.transform.GetComponent<EnemyHealth>();
-                eh.HealthModifications(-DamageParCoup);
-            }
+            EnemyHealth eh = collider.transform.GetComponent<EnemyHealth>();
+            eh.HealthModifications(-DamageParCoup);
         }
     }
 }

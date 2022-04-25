@@ -7,7 +7,7 @@ public class Gift : MonoBehaviour
    
     void OnTriggerEnter2D(Collider2D collider)
     {
-        int h = Random.Range(0, 2); //nb aléatoire pour savoir s'il gagne ou perde de la vie
+        int h = Random.Range(0, 2); //nb alÃ©atoire pour savoir s'il gagne ou perde de la vie
 
         if (collider.transform.GetComponent<PhotonView>().IsMine && collider.transform.CompareTag("Player"))
         {
@@ -20,8 +20,7 @@ public class Gift : MonoBehaviour
             {
                 ph.HealthModifications(-30);
             }
-            //destruction du consommable seulement chez le joueur qui l'a pris
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
 
     }
