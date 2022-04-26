@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2384600941704032576}
+  - component: {fileID: 3662613663533902185}
   - component: {fileID: 4082008547429492513}
   - component: {fileID: 3022419067490697012}
   - component: {fileID: 304853788432015427}
@@ -26,15 +26,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2384600941704032576
-RectTransform:
+--- !u!4 &3662613663533902185
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639398116388588925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 14.108, y: -0.817, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.5}
   m_Children:
   - {fileID: 1261403144530960917}
@@ -43,11 +43,6 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.108, y: -0.817}
-  m_SizeDelta: {x: 1.71, y: 2.46}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &4082008547429492513
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -112,8 +107,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.010259509, y: -0.11285484}
-  m_Size: {x: 1.233252, y: 2.103771}
+  m_Offset: {x: -0.03747324, y: -0.11285484}
+  m_Size: {x: 1.1788244, y: 2.103771}
   m_Direction: 0
 --- !u!50 &304853788432015427
 Rigidbody2D:
@@ -187,16 +182,16 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isWalking
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isJumping
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isHitting
   - Type: 3
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: health
   m_SynchronizeLayers:
   - SynchronizeType: 0
@@ -291,7 +286,7 @@ Transform:
   m_LocalPosition: {x: -0.007, y: -0.652, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children: []
-  m_Father: {fileID: 2384600941704032576}
+  m_Father: {fileID: 3662613663533902185}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2641306741877795041
@@ -405,7 +400,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 14.095, y: -268.885}
+  m_AnchoredPosition: {x: 13.6, y: -269.74}
   m_SizeDelta: {x: 97.4434, y: 40.5123}
   m_Pivot: {x: 0.5, y: 0.50000024}
 --- !u!114 &6317283424998912495
@@ -501,7 +496,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 4}
   m_Children: []
-  m_Father: {fileID: 2384600941704032576}
+  m_Father: {fileID: 3662613663533902185}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7628002057175352684
@@ -517,8 +512,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.36103174, y: -0.42022446}
-  m_Size: {x: 1.0563601, y: 0.29878917}
+  m_Offset: {x: 0.4562811, y: -0.37940332}
+  m_Size: {x: 1.2468596, y: 0.38043165}
   m_Direction: 1
 --- !u!114 &9037330837777050053
 MonoBehaviour:
@@ -618,7 +613,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3109186114463370739}
   - component: {fileID: 2956680465254515022}
-  - component: {fileID: 4384024444931058306}
   - component: {fileID: 5542480001941482863}
   m_Layer: 5
   m_Name: EnemyBar
@@ -639,7 +633,7 @@ RectTransform:
   m_LocalScale: {x: 1.6666665, y: 1.6666665, z: 2}
   m_Children:
   - {fileID: 944303141695182418}
-  m_Father: {fileID: 2384600941704032576}
+  m_Father: {fileID: 3662613663533902185}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -668,29 +662,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &4384024444931058306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8542781944336143403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
 --- !u!114 &5542480001941482863
 MonoBehaviour:
   m_ObjectHideFlags: 0

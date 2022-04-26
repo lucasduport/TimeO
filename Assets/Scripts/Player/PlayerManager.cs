@@ -58,12 +58,7 @@ public class PlayerManager : MonoBehaviour
             if (_view.IsMine) PhotonNetwork.Destroy(gameObject);
             POVManager.Spectate = true;
         }
-        
-        if (Input.GetKeyDown((KeyCode)27))
-        {
-            Menu.MenuPause.SetActive(true);
-        }
-        
+
         if (_view.IsMine)
         {
             //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
@@ -164,7 +159,7 @@ public class PlayerManager : MonoBehaviour
         if (Anim.GetBool("isStone"))
         {
             Anim.SetBool("isStone", false);
-            if (PTransform.localScale.x == -0.5f)
+            if (PTransform.localScale.x == -0.5)
             {
                 PhotonNetwork.Instantiate("Stone", PTransform.position + new Vector3(-0.7f, 0f, 0f),
                     Quaternion.identity);
@@ -180,7 +175,7 @@ public class PlayerManager : MonoBehaviour
             if (Anim.GetBool("isBranch"))
             {
                 Anim.SetBool("isBranch", false);
-                if (PTransform.localScale.x == -0.5f)
+                if (PTransform.localScale.x == -0.5)
                 {
                     PhotonNetwork.Instantiate("Branch", PTransform.position + new Vector3(-0.7f, 0f, 0f),
                         Quaternion.identity);

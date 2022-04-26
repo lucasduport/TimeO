@@ -10,7 +10,7 @@ public class WeaponBranch : MonoBehaviour
     {
         if (collider.transform.CompareTag("Player"))
         {
-            if (collider.transform.GetComponent<PhotonView>().IsMine && !collider.transform.GetComponent<Animator>().GetBool("isBranch"))
+            if (collider.transform.GetComponent<PhotonView>().IsMine)
             {
                 Animator ph = collider.transform.GetComponent<Animator>();
                 ph.SetBool("isBranch", true);
@@ -26,7 +26,7 @@ public class WeaponBranch : MonoBehaviour
 
     IEnumerator Destruction()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         if (gameObject.GetComponent<PhotonView>().IsMine &&
             gameObject.transform.localScale == Vector3.zero)
         {

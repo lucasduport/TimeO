@@ -14,6 +14,7 @@ public class HealObject : MonoBehaviour
             {
                 PlayerHealth ph = collider.transform.GetComponent<PlayerHealth>();
                 ph.HealthModifications(heal);
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0f);
             }
 
             if (gameObject.GetComponent<PhotonView>().IsMine)

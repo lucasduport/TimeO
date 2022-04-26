@@ -11,28 +11,31 @@ public class Menu : MonoBehaviour
     public GameObject GameOver;
 
     public AudioMixer mainMixer;
-    public GameObject Pause;
-
-    public static GameObject MenuPause;
+    public GameObject MenuPause;
 
     public GameObject Settings;
-    
-    public void Start()
-    {
-        MenuPause = Pause;
-    }
 
-    public void FixedUpdate()
+
+    public void Update()
     {
-        if (Input.GetKeyDown((KeyCode)27))
+        if (Input.GetKeyDown((KeyCode) 27))
         {
-            if (Settings.activeSelf)
+            if (MenuPause.activeSelf)
             {
-                Back();
+                {
+                    Resume();
+                }
             }
             else
             {
-                Resume();
+                if (Settings.activeSelf)
+                {
+                    Back();
+                }
+                else
+                {
+                    Pause();
+                }
             }
         }
     }
@@ -66,18 +69,23 @@ public class Menu : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        mainMixer.SetFloat("volume",volume);
+        mainMixer.SetFloat("volume", volume);
     }
 
     public void Back()
     {
+        MenuPause.SetActive(true);
         Settings.SetActive(false);
-        Pause.SetActive(true);
     }
 
     public void Panel()
     {
         Settings.SetActive(true);
-        Pause.SetActive(false);
+        MenuPause.SetActive(false);
+    }
+
+    public void Pause()
+    {
+        MenuPause.SetActive(true);
     }
 }

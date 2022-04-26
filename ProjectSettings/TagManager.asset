@@ -9,8 +9,14 @@ TagManager:
   - Enemy
   - Spectateur
   - TimeoCam
+  - Bullet
   - CarlCam
+  - EnemyLimit
+  - PlayerCam
   - Stone
+  - MenuPause
+  - Parchemin
+  - ParcheminText
   layers:
   - Default
   - TransparentFX

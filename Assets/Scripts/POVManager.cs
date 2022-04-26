@@ -45,7 +45,7 @@ public class POVManager : MonoBehaviour
 
     IEnumerator GravityTime()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(3f);
         GravityEnabled = false;
     }
 
