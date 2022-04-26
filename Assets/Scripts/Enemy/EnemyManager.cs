@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Photon.Pun;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -57,52 +59,6 @@ public class EnemyManager : MonoBehaviour
     public Transform ChampDeVisionBD;
 
     public bool InSightRange;// champ de vision. Fonctionne comme IsCloseRange
-
-    void Patroll()
-    {
-      
-        transform.position = Vector3.MoveTowards(transform.position, target,0.001f);// bouge jusqu'à la target
-        
-        if (Vector3.Distance(transform.position,target) < 0.3f)
-        {
-            destpoint = (destpoint + 1) % 2; // changement de target lorsqu'il en atteint une
-            target = waypoints[destpoint].position;
-            
-        }
-        
-    }
-    void Tempo ()
-    {
-
-        Destination = new Vector3(Player.position.x, -1f, 0); 
-        transform.position = Vector3.MoveTowards(transform.position, Destination, 0.000001f); // fait un petit mouv pour faire une pause
-    }
-    
-    
-    void Charge()
-    {
-        Destination = new Vector3(Player.position.x, -1f, 0);
-
-        transform.position = Vector3.MoveTowards(transform.position, Destination, 0.005f); //mouvement rapide 
-        if (Vector3.Distance(transform.position, Destination) < 0.3f)
-        {
-            //HitPlayer
-            /*PlDest = new Vector3(Player.position.x - 0.1f, Player.position.y + 0.1f, 0);
-            Player.position = Vector3.MoveTowards(Player.position, PlDest, 0.01f);
-            Invoke("Tempo", 5);*/
-            // cette partie pose problème car il ne fait pas le test pendant mais après le déplacement
-        }
-
-
-    }
-    void AttaqueCorpsACorps()
-    {
-        
-        Destination = new Vector3(Player.position.x, -1f, 0);
-        transform.position = Vector3.MoveTowards(transform.position, Destination, 0.002f); // mouvement moyen
-        
-    }
-
     private void Start()
     {
         //Récupération des composants
@@ -113,29 +69,25 @@ public class EnemyManager : MonoBehaviour
         //patrouille
         target = waypoints[0].position;
 
-        
     }
 
     void Update()
     {
         //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
-        /*isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, layermask);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, layermask);
                                                         //Mob est le nom du layer avec qui les detections ne seront pas faites
                                                      
-        horizontalmove = 0 * 150 * Time.fixedDeltaTime;
-
+        
         //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche
-        Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
-        Anim.SetBool("isJumping", !isGrounded);
+        Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.01 && isGrounded);
+        Anim.SetBool("isJumping", false);
 
-        isJumping = false;
-
-        */
         Player = PlayerManager.PTransform; //récupère transform du joueur
 
         IsCloseRange = Physics2D.OverlapArea(CloseRangeHautGauche.position, CloseRangeBasDroite.position, PlayerLayer);
         IsMidRange = Physics2D.OverlapArea(MidRangeHautGauche.position, MidRangeBasDroite.position, PlayerLayer);
-        InSightRange = Physics2D.OverlapArea(ChampDeVisionHG.position, ChampDeVisionBD.position, PlayerLayer);
+        InSightRange = Physics2D.OverlapArea(ChampDeVisionHG.position, ChampDeVisionBD.position, PlayerLayer) &&
+                       Player.position.x < waypoints[1].position.x && Player.position.x > waypoints[0].position.x;
         
 
         if (EnemyHealth.currentHealth < CH) //teste efficacité du coup
@@ -158,13 +110,14 @@ public class EnemyManager : MonoBehaviour
         }
         else if (!IsMidRange) //si le joueur est loin l'enni fait une pause et charge
         {
-            Invoke("Charge",2);
+            StartCoroutine(Charge());
             LastAttack = 'c'; // la dernière attaque devient une charge
         }
         else if (IsCloseRange) // si le joueur et contact l'ennemi lance une attaque corps à corps
         {
            
             AttaqueCorpsACorps();
+            StartCoroutine(Tempo());
             LastAttack = 'a';// la dernière attaque devient une attaque corps à corps
         }
         else // si le joueur est mid range 
@@ -173,43 +126,73 @@ public class EnemyManager : MonoBehaviour
             if (randomFloat * Char < 0.5) // on multiplie le nombre aléatoire par char ce qui a tendance à renvoyer le meilleur coup mais pas tout le temps non plus
             {
                 AttaqueCorpsACorps();
+                StartCoroutine(Tempo());
                 LastAttack = 'a';
             }
             else
             {
                 Charge();
+                StartCoroutine(Tempo());
                 LastAttack = 'c';
             }
 
         }
-        Invoke("Tempo", 3); // pause à la fin
-
-
-
+        
     }
-    // Update is called once per frame
-    /*void FixedUpdate()
+    void FixedUpdate()
     {
-        MoveMob(horizontalmove);
 
         Flip(rb.velocity.x);
     }
-
-    //MovePlayer() gère de le déplacement du joueur en fonction de _horizontalmove
-    void MoveMob (float _horizontalmove)
+    
+    void Patroll()
     {
-        Vector3 targetVelocity = new Vector2(_horizontalmove, rb.velocity.y);
-        //le SmoothDamp permet de ne pas faire un déplacement trop bref mais légerement glissé
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, 0.15f);
-        if (isJumping)
+      
+        transform.position = Vector3.MoveTowards(transform.position, target,0.001f);// bouge jusqu'à la target
+        
+        if (Vector3.Distance(transform.position,target) < 0.3f)
         {
-            //On pousse le rigidbody vers le haut
-            rb.AddForce(new Vector2(0f, 250f));
+            destpoint = (destpoint + 1) % 2; // changement de target lorsqu'il en atteint une
+            target = waypoints[destpoint].position;
             
-            isJumping = false;
         }
+        
+    }
+    IEnumerator Tempo ()
+    {
+        Debug.Log("Tempo");
+        yield return new WaitForSeconds(1f);
+        Patroll();
     }
     
+    
+    IEnumerator Charge()
+    {
+        Debug.Log("Charge");
+        yield return new WaitForSeconds(3f);
+        
+        Destination = new Vector3(Player.position.x, Player.position.y, 0);
+
+        transform.position = Vector3.MoveTowards(transform.position, Destination, 0.005f); //mouvement rapide 
+        if (Vector3.Distance(transform.position, Player.position) < 0.3f)
+        {
+            //HitPlayer
+            Player.position = Vector3.MoveTowards(Player.position, PlDest, 0.01f);
+
+        }
+
+
+    }
+    void AttaqueCorpsACorps()
+    {
+        
+        Destination = new Vector3(Player.position.x, -1f, 0);
+        transform.position = Vector3.MoveTowards(transform.position, Destination, 0.002f); // mouvement moyen
+        
+    }
+
+    //MovePlayer() gère de le déplacement du joueur en fonction de _horizontalmove
+
     //Flip() qui prend en paramètre la vitesse du RigidBody, permet de savoir dans quel sens se déplace le perso et ainsi
     //de retourner l'image si besoin
     void Flip(float _rbvelocity)
@@ -228,7 +211,7 @@ public class EnemyManager : MonoBehaviour
         }
 
     }
-    */// Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
+    /// Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
     /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
