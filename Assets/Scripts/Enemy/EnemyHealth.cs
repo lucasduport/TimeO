@@ -23,6 +23,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Update()
     {
+        if (!GetComponent<PhotonView>().IsMine) return;
         if (transform.localScale.x < 0 && healthBar.transform.localScale.x > 0)
         {
             healthBar.transform.localScale = new Vector3(-healthBar.transform.localScale.x,healthBar.transform.localScale.y,healthBar.transform.localScale.z);

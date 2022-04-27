@@ -15,235 +15,60 @@ public class EnemyManager : MonoBehaviour
 
     public Transform groundCheck; // transform enfant du player qui détecte les colisions avec le sol
 
-
-
     private float horizontalmove;
     private Vector3 velocity = Vector3.zero;
     
     private bool isJumping;
     private bool isGrounded;
 
-
-    
-
     // variables patrouille
     public Transform[] waypoints; // contient les deux bornes qui délimitent la zone de patrouille du mob
-    private Vector3 target; // point ciblé pour la patrouille.Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
+    private Vector3 target; // point ciblé pour la patrouille. Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
     private int destpoint = 0; // coefficient qui prend les valeurs 0 ou 1 pour choisir la target 
-
-    // detection du joueur
-    public bool IsCloseRange; // la détection se fait grâce à Overlaparea entre le coin haut gauche et bas droite de la zone
-    public bool IsMidRange;
-    public Transform CloseRangeHautGauche; 
-    public Transform CloseRangeBasDroite;
-    public Transform MidRangeHautGauche;
-    public Transform MidRangeBasDroite;
-
-    public LayerMask PlayerLayer; // permet d'avoir le layer du player pour la détection de joueur dans la close/mid range, afin de ne pas détecter le sol par ex.
-    private Transform Player; // transform de timeo
-    //public Vector3 PlDest; //pour faire voler le joueur en chargeant
-    private Vector3 Destination; //récupère le point à viser lors de la charge/attaque corps à corps
-    // choix de l'action
-    private System.Random rand = new System.Random(); // random pour choisir entre charge et attaque càc
-    private float randomFloat;
-    public float Char; //coefficient initialisé à 1 qui augmente si la charge est efficace et inversement
-    private char LastAttack; //garde en mémoire la dernière attaque afin de faire varier Char
-    public int CH; // récupère la vie de l'ennemi pour avoir l'efficacité des attaques
-
-
-    //delimitation champ de vision de l'ennemi
-
-    public Transform ChampDeVisionHG;
-    public Transform ChampDeVisionBD;
-
-    public bool InSightRange;// champ de vision. Fonctionne comme IsCloseRange
-
-
-    private bool b;
-    private bool bb;
-    private bool c;
-    private bool cb;
-    private bool cbb;
-    private bool bbb;
-
-
-    private float t;
 
     private void Start()
     {
-        CH = GetComponent<EnemyHealth>().currentHealth;
-        
+
         //Récupération des composants
         rb = GetComponent<Rigidbody2D>();
         MTransform = GetComponent<Transform>();
         Anim = GetComponent<Animator>();
         
         //patrouille
-        target = waypoints[1].position;
-        b = false;
-        c = false;
-        bb = false;
-        cb = false;
-        bbb = false;
-        cbb = false;
+        if (waypoints.Length >0) target = waypoints[0].position;
     }
 
     void Update()
     {
-        
+        if (!GetComponent<PhotonView>().IsMine) return;
         
         //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, layermask);
                                                         //Mob est le nom du layer avec qui les detections ne seront pas faites
-                                                     
-        horizontalmove = 0 * 150 * Time.fixedDeltaTime;
+                                                        
 
         //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche
         Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
         Anim.SetBool("isJumping", !isGrounded);
 
         isJumping = false;
+
+        if (waypoints.Length == 2)
+        {        
+            if (destpoint == 0)
+            {
+                horizontalmove = -0.6f * 150 * Time.fixedDeltaTime;
+            }
+            else
+            {
+                horizontalmove = 0.6f * 150 * Time.fixedDeltaTime;
+            }
         
-        float minDistance = Single.MaxValue;
-        foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            if (Vector3.Distance(transform.position, player.transform.position) < minDistance)
-            {
-                minDistance = Vector3.Distance(transform.position, player.transform.position);
-                Player = player.transform;
-            }
-        }
-
-        IsCloseRange = Physics2D.OverlapArea(CloseRangeHautGauche.position, CloseRangeBasDroite.position, PlayerLayer);
-        IsMidRange = Physics2D.OverlapArea(MidRangeHautGauche.position, MidRangeBasDroite.position, PlayerLayer);
-        InSightRange = Physics2D.OverlapArea(ChampDeVisionHG.position, ChampDeVisionBD.position, PlayerLayer);
-        
-
-        if (GetComponent<EnemyHealth>().currentHealth < CH) //teste efficacité du coup
-        {
-            CH = GetComponent<EnemyHealth>().currentHealth;
-            if (LastAttack == 'a')
-            {
-                Char += (1 / 10);
-                
-            }
-            if (LastAttack == 'c')
-            {
-                Char -= (1 / 10);
-            }
-
-        }
-
-        if (!InSightRange && !b && !c && !cb && !bb && !bbb && !cbb)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, target, 0.01f);// bouge jusqu'à la target
-
             if (Vector2.Distance(transform.position, target) < 0.3f)
             {
                 destpoint = (destpoint + 1) % 2; // changement de target lorsqu'il en atteint une
                 target = waypoints[destpoint].position;
 
-            }
-        }
-        else if ((!IsMidRange || b || bb || bbb) && !c && !cb && ! cbb)
-        {
-            
-            if (!b &&!bb && !bbb)
-            {
-                if (Player.position.x - transform.position.x > 0)
-                {
-                    Destination = new Vector3(waypoints[1].position.x, waypoints[1].position.y, 0);
-                }
-                else
-                {
-                    Destination = new Vector3(waypoints[0].position.x, waypoints[0].position.y, 0);
-                }
-                t = Time.time;
-                b = true;
-            }
-            else if(Time.time-t > 2 && b && !bb && !bbb)
-            {
-                if (Vector2.Distance(transform.position, Destination) > 1f)
-                {
-                    transform.position = Vector2.MoveTowards(transform.position, Destination, 0.05f);
-                }
-                else
-                {
-                    b = false;
-                    bb = true;
-                    t = 0;
-                }
-            }
-            if (bb)
-            {
-                if (!bbb)
-                {
-                    t = Time.time;
-                    bbb = true;
-                }
-                else if (Time.time -t >1)
-                {
-                    bb = false;
-                    bbb = false;
-                    t = 0;
-                }
-            }
-            
-            
-
-        }
-        else if ((IsCloseRange || c || cb || cbb) && !b && !bb && !bbb)
-        {
-            
-            if (!c && !cb && !cbb)
-            {
-                Destination = new Vector3(Player.position.x, Player.position.y, 0);
-                t = Time.time;
-                c = true;
-            }
-            if(Time.time - t > 2 && c && !cb && !cbb)
-            {
-                
-                if (Time.time -t < 4 && c && !cb && !cbb)
-                {
-                    
-                    transform.position = Vector2.MoveTowards(transform.position, Destination, 0.025f); // mouvement moyen
-                }
-                else
-                {
-                    c = false;
-                    cb = true;
-                    t = 0;
-                }
-                
-            }
-            if (cb)
-            {
-                if (!cbb)
-                {
-                    t = Time.time;
-                    cbb = true;
-                }
-                else if (Time.time - t > 1)
-                {
-                    cb = false;
-                    cbb = false;
-                    t = 0;
-                }
-            }
-
-        }
-        else if (IsMidRange && !b && !c && !cb && !bb && !bbb && !cbb)
-        {
-            randomFloat = (float)rand.NextDouble();
-            t = Time.time;
-            if (randomFloat * Char < 0.5)// on multiplie le nombre aléatoire par char ce qui a tendance à renvoyer le meilleur coup mais pas tout le temps non plus
-            { 
-                c = true;
-            }
-            else
-            {
-                b = true;
             }
         }
     }
