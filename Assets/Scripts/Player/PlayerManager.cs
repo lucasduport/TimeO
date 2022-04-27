@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,7 @@ public class PlayerManager : MonoBehaviour
     public Camera m_cam;
     public Canvas canvas;
     private PhotonView _view;
+    
 
 
     private void Start()
@@ -37,11 +39,10 @@ public class PlayerManager : MonoBehaviour
         //Récupération des composants
         rb = GetComponent<Rigidbody2D>();
         PTransform = GetComponent<Transform>();
-        
+
         _view = GetComponent<PhotonView>();
-        POVManager.PlayerCam.Add(gameObject.name,m_cam);
-        
-        
+
+
         //méthode de PhotonView qui permait de savoir si l'on est bien sur la vue du joueur concerné
         if (_view.IsMine)
         {

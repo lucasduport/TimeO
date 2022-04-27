@@ -8,29 +8,31 @@ public class WeaponBranch : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.transform.CompareTag("Player"))
+        if (collider.CompareTag("Player"))
         {
-            if (collider.transform.GetComponent<PhotonView>().IsMine)
+            PhotonView pView = collider.GetComponent<PhotonView>();
+            if (pView.IsMine)
             {
-                Animator ph = collider.transform.GetComponent<Animator>();
+                Animator ph = collider.GetComponent<Animator>();
                 ph.SetBool("isBranch", true);
+                StartCoroutine(Destruction());
             }
-            gameObject.transform.localScale = Vector3.zero;
-            foreach (var c in gameObject.GetComponents<Collider2D>())
+            foreach (var c in GetComponents<Collider2D>())
             {
                 c.enabled = false;
             }
-            StartCoroutine(Destruction());
+            transform.localScale = Vector3.zero;
+            
         }
     }
-
+    
     IEnumerator Destruction()
     {
         yield return new WaitForSeconds(0.5f);
-        if (gameObject.GetComponent<PhotonView>().IsMine &&
-            gameObject.transform.localScale == Vector3.zero)
+        if (GetComponent<PhotonView>().IsMine)
         {
             PhotonNetwork.Destroy(gameObject);
         }
     }
+
 }

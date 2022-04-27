@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using UnityEngine.UI;
 
 public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
@@ -28,14 +29,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        //chargement du premier niveau sur le server si il y a seulement 1 autre joueur
         PhotonNetwork.LoadLevel("Level01");
     }
 
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        
         PhotonNetwork.LocalPlayer.NickName = " ";
     }
 }

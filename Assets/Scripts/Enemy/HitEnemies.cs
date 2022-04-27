@@ -10,9 +10,9 @@ public class HitEnemies : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.transform.CompareTag("Player"))
+        if (collider.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = collider.transform.GetComponent<PlayerHealth>();
+            PlayerHealth playerHealth = collider.GetComponent<PlayerHealth>();
             Animator anim = transform.parent.GetComponent<Animator>();
             anim.Play("hit");
             playerHealth.HealthModifications(-DamageParCoup);

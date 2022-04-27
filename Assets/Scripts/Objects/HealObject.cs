@@ -8,16 +8,16 @@ public class HealObject : MonoBehaviour
     public int heal;
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if ( collider.transform.CompareTag("Player"))
+        if ( collider.CompareTag("Player"))
         {
-            if (collider.transform.GetComponent<PhotonView>().IsMine)
+            if (collider.GetComponent<PhotonView>().IsMine)
             {
-                PlayerHealth ph = collider.transform.GetComponent<PlayerHealth>();
+                PlayerHealth ph = collider.GetComponent<PlayerHealth>();
                 ph.HealthModifications(heal);
-                gameObject.GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0f);
+                GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0f);
             }
 
-            if (gameObject.GetComponent<PhotonView>().IsMine)
+            if (GetComponent<PhotonView>().IsMine)
             {
                 PhotonNetwork.Destroy(gameObject);
             }

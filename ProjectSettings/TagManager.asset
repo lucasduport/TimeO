@@ -6,17 +6,9 @@ TagManager:
   tags:
   - Spawner
   - Map
-  - Enemy
-  - Spectateur
-  - TimeoCam
-  - Bullet
-  - CarlCam
-  - EnemyLimit
-  - PlayerCam
   - Stone
-  - MenuPause
-  - Parchemin
-  - ParcheminText
+  - Enemy
+  - GameManager
   layers:
   - Default
   - TransparentFX

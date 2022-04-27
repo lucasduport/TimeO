@@ -12,7 +12,6 @@ public class SpawnPlayers : MonoBehaviour
     public GameObject Player2Prefab;
 
     public Transform SpawnLocation;
-    public Transform SpawnLimitPointTransform;
 
     private bool isTimeo;
 
@@ -21,8 +20,7 @@ public class SpawnPlayers : MonoBehaviour
     {
         if (PhotonNetwork.PlayerList.Length > 2)
         {
-            GameObject.Find("SpectateText").GetComponent<Text>().color = new Color(1f,1f,1f,1f);
-            StartCoroutine(WaitForCam());
+            POVManager.Spectate = true;
         }
         else
         {
@@ -48,13 +46,6 @@ public class SpawnPlayers : MonoBehaviour
                     Quaternion.identity);
             }
         }
-    }
-
-    IEnumerator WaitForCam()
-    {
-        yield return new WaitForSeconds(0.5f); 
-        GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject.SetActive(true);
-        POVManager.Spectate = true;
     }
 
 }

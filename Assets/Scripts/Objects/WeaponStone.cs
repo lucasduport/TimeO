@@ -13,37 +13,37 @@ public class WeaponStone : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            if (collider.GetComponent<PhotonView>().IsMine && !collider.GetComponent<Animator>().GetBool("isStone"))
+            if (collider.GetComponent<PhotonView>().IsMine)
             {
                 Animator ph = collider.GetComponent<Animator>();
                 ph.SetBool("isStone", true);
                 StartCoroutine(Destruction());
             }
-            foreach (var c in gameObject.GetComponents<Collider2D>())
+            foreach (var c in GetComponents<Collider2D>())
             {
                 c.enabled = false;
             }
-            gameObject.transform.localScale = Vector3.zero;
+            transform.localScale = Vector3.zero;
         }
 
         if (collider.CompareTag("Stone"))
         {
             if (collider.GetComponent<PhotonView>().IsMine && collider.GetComponent<Rigidbody2D>().velocity.y == 0)
             {
-                PhotonNetwork.Instantiate("Fire", gameObject.transform.position, Quaternion.identity);
+                PhotonNetwork.Instantiate("Fire", transform.position, Quaternion.identity);
                 StartCoroutine(Destruction());
             }
             foreach (var c in gameObject.GetComponents<Collider2D>())
             {
                 c.enabled = false;
             }
-            gameObject.transform.localScale = Vector3.zero;
+            transform.localScale = Vector3.zero;
         }
     }
     IEnumerator Destruction()
     {
         yield return new WaitForSeconds(0.5f);
-        if (gameObject.GetComponent<PhotonView>().IsMine)
+        if (GetComponent<PhotonView>().IsMine)
         {
             PhotonNetwork.Destroy(gameObject);
         }

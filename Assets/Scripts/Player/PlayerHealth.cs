@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         if (!Killed && currentHealth <= 0)
         {
-            gameObject.GetComponent<Animator>().SetBool("killed",true);
+            GetComponent<Animator>().SetBool("killed",true);
             Killed = true;
         }
     }
@@ -71,7 +71,7 @@ public class PlayerHealth : MonoBehaviour
     
     public IEnumerator HandleInvicibilityDelay()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1.5f);
         isInvicible = false;
     }
 }
