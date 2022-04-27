@@ -345,6 +345,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: weaponCollider
       objectReference: {fileID: 0}
+    - target: {fileID: 3228392988265535000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4316526407149174167, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
       propertyPath: m_Enabled
       value: 1

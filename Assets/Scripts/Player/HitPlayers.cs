@@ -5,9 +5,9 @@ using Photon.Pun;
 public class HitPlayers : MonoBehaviour
 {
     public int DamageParCoup = 30;
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnTriggerStay2D(Collider2D collider)
     {
-        if (collider.transform.CompareTag("Enemy"))
+        if (GetComponent<PhotonView>().IsMine && collider.transform.CompareTag("Enemy"))
         {
             EnemyHealth eh = collider.transform.GetComponent<EnemyHealth>();
             eh.HealthModifications(-DamageParCoup);
