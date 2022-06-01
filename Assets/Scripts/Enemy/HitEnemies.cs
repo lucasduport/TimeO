@@ -16,7 +16,10 @@ public class HitEnemies : MonoBehaviour
             Animator anim = transform.parent.GetComponent<Animator>();
             anim.Play("hit");
             playerHealth.HealthModifications(-DamageParCoup);
+            if ( (collider.transform.position.x < transform.position.x && transform.parent.transform.localScale.x < 0) || (collider.transform.position.x > transform.position.x && transform.parent.transform.localScale.x > 0))
+            {
+                transform.parent.transform.localScale = new Vector3(-transform.parent.transform.localScale.x, transform.parent.transform.localScale.y, transform.parent.transform.localScale.z);
+            }
         }
     }
-
 }

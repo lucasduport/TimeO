@@ -13,6 +13,7 @@ public class EnemyHealth : MonoBehaviour
     private Animator Anim;
     private Transform ht;
 
+    public Collider2D[] Colliders;
     public String prefabToInstantianteOnDeath = "";
     void Start()
     {
@@ -45,6 +46,10 @@ public class EnemyHealth : MonoBehaviour
             if (prefabToInstantianteOnDeath != "")
             {
                 PhotonNetwork.Instantiate(prefabToInstantianteOnDeath, transform.position, Quaternion.identity);
+            }
+            foreach (var c in Colliders)
+            {
+                c.enabled = true;
             }
             PhotonNetwork.Destroy(gameObject);
         }

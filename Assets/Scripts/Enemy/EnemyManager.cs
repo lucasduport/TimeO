@@ -24,7 +24,8 @@ public class EnemyManager : MonoBehaviour
     // variables patrouille
     public Transform[] waypoints; // contient les deux bornes qui délimitent la zone de patrouille du mob
     private Vector3 target; // point ciblé pour la patrouille. Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
-    private int destpoint = 0; // coefficient qui prend les valeurs 0 ou 1 pour choisir la target 
+    private int destpoint; // coefficient qui prend les valeurs 0 ou 1 pour choisir la target 
+    public float speedEnemy = 0.0035f;
 
     private void Start()
     {
@@ -37,6 +38,7 @@ public class EnemyManager : MonoBehaviour
         //patrouille
         target = waypoints[1].position;
         destpoint = 1;
+        Anim.SetBool("isWalking", true);
     }
 
     void Update()
@@ -49,30 +51,12 @@ public class EnemyManager : MonoBehaviour
                                                         
 
         //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche
-        Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
+        
         Anim.SetBool("isJumping", !isGrounded);
 
         isJumping = false;
-
-        /*if (waypoints.Length == 2)
-        {        
-            if (destpoint == 0)
-            {
-                horizontalmove = -0.6f * 150 * Time.fixedDeltaTime;
-            }
-            else
-            {
-                horizontalmove = 0.6f * 150 * Time.fixedDeltaTime;
-            }
         
-            if (Vector2.Distance(transform.position, target) < 0.3f)
-            {
-                destpoint = (destpoint + 1) % 2; // changement de target lorsqu'il en atteint une
-                target = waypoints[destpoint].position;
-
-            }
-        }*/
-        transform.position = Vector3.MoveTowards(transform.position, target, 0.007f);// bouge jusqu'à la target
+        transform.position = Vector3.MoveTowards(transform.position, target, speedEnemy);// bouge jusqu'à la target
         if (MTransform.localScale.x >0 && destpoint%2 == 1)
         {
             destpoint = 0;

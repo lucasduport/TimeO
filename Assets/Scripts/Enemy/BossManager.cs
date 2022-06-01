@@ -8,19 +8,16 @@ using UnityEditor;
 
 public class BossManager : MonoBehaviour
 {
-    public Transform[] waypoints; // contient les deux bornes qui délimitent la zone de patrouille du mob
-    private Vector3 target; // point ciblé pour la patrouille.Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
-    private int destpoint = 0; // coefficient qui prend les valeurs 0 ou 1 pour choisir la target 
-    
-    
-    
+    public Transform[] waypoints; // contient les deux bornes qui dï¿½limitent la zone de patrouille du mob
+    private Vector3 target; // point ciblÃ© pour la patrouille.Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
+    private int destpoint; // coefficient qui prend les valeurs 0 ou 1 pour choisir la target 
+
     public Transform MTransform; //transform du mob
     private Animator Anim;
 
-
-    public Transform ChampDeVisionHD; // la détection se fait grâce à Overlaparea entre le coin haut gauche et bas droite de la zone
+    public Transform ChampDeVisionHD; // la dï¿½tection se fait grÃ¢ce a Overlaparea entre le coin haut gauche et bas droite de la zone
     public Transform ChampDeVisionBG;
-
+    
     private bool IsCloseRange; 
     private bool IsMidRange;
     private bool InSightRange;
@@ -44,7 +41,6 @@ public class BossManager : MonoBehaviour
 
     private System.Random r;
     private double Charge;
-    private char LastAttack; // c -> charge ; a -> attaque corps à corps
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +62,7 @@ public class BossManager : MonoBehaviour
 
         if (!InSightRange) // patrouille
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, 0.005f);// bouge jusqu'à la target
+            transform.position = Vector3.MoveTowards(transform.position, target, 0.0035f);// bouge jusqu'ï¿½ la target
             if (MTransform.localScale.x > 0 && destpoint % 2 == 1)
             {
                 destpoint = 0;
@@ -106,18 +102,15 @@ public class BossManager : MonoBehaviour
                 {
                    
                     HasAttacked = false;
-                    Debug.Log("vient d'attaquer");
                 }
             }
             else if ((!IsMidRange && !IsCloseAttacking) || IsWaitingToCharge || IsCharging ) // charge
             {
                 if (!IsWaitingToCharge && !IsCharging)
                 {
-                    //début pause avant la charge
+                    //dï¿½but pause avant la charge
                     IsWaitingToCharge = true;
-                    LastAttack = 'c';
                     t = Time.time;
-                    Debug.Log("debut pause avant la charge");
 
                 }
                 else
@@ -125,7 +118,6 @@ public class BossManager : MonoBehaviour
                     if (IsCharging && Time.time-t <3f)
                     {
                         // charge
-                        //Debug.Log("charge");
                         if (Vector3.Distance(transform.position, PosToGo) < 0.3f) // fin de la charge si on arrive au bout de la zone
                         {
                             IsCharging = false;
@@ -134,7 +126,7 @@ public class BossManager : MonoBehaviour
                         }
                         else
                         {
-                            transform.position = Vector3.MoveTowards(transform.position, PosToGo, 0.04f);
+                            transform.position = Vector3.MoveTowards(transform.position, PosToGo, 0.006f);
                         }
                       
                     }
@@ -144,13 +136,11 @@ public class BossManager : MonoBehaviour
                         IsCharging = false; 
                         HasAttacked = true;
                         t = Time.time;
-                        Debug.Log("fin charge");
 
                     }
                     else if (Time.time - t > 2f)
                     {
                         // sur le point de charger
-                        Debug.Log("sur le point de charger");
                         IsCharging = true; 
                         IsWaitingToCharge = false;
                         t = Time.time;
@@ -166,15 +156,12 @@ public class BossManager : MonoBehaviour
                     }
                 }
             }
-            else if ((IsCloseRange && !(IsWaitingToCharge || IsCharging)) || IsCloseAttacking) // attaque corps à corps
+            else if ((IsCloseRange && !(IsWaitingToCharge || IsCharging)) || IsCloseAttacking) // attaque corps Ã  corps
             {
                 if (!IsCloseAttacking) // debut de l'attaque
                 {
                     IsCloseAttacking = true;
-                    LastAttack = 'a'; 
                     t = Time.time;
-                    Debug.Log("debut acac");
-
                 }
                 else if (Time.time-t < 3f) // attaque
                 {
@@ -186,7 +173,7 @@ public class BossManager : MonoBehaviour
                     {
                         PosToGo = waypoints[1].position;
                     }
-                    //Debug.Log("acac");
+
                     transform.position = Vector3.MoveTowards(transform.position, PosToGo, 0.01f);
                     
                 }
@@ -195,8 +182,6 @@ public class BossManager : MonoBehaviour
                     IsCloseAttacking = false;
                     HasAttacked = true;
                     t = Time.time;
-                    Debug.Log("fin attaque cac");
-                    
                 }
                 
             }
@@ -205,22 +190,14 @@ public class BossManager : MonoBehaviour
                 if (r.Next(10)*Charge >= 5)
                 {
                     IsWaitingToCharge = true;
-                    LastAttack = 'c';
                     t = Time.time;
-                    Debug.Log("charge via mid range");
                 }
                 else
                 {
                     IsCloseAttacking = true;
-                    LastAttack = 'a';
                     t = Time.time;
-                    Debug.Log("attaque cac via mid range");
                 }
             }
         }
-        
-        
     }
-   
-    
 }
