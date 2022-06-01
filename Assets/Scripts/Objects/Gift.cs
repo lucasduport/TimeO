@@ -7,21 +7,19 @@ public class Gift : MonoBehaviour
    
     void OnTriggerEnter2D(Collider2D collider)
     {
-        int h = Random.Range(0, 2); //nb aléatoire pour savoir s'il gagne ou perde de la vie
-
-        if (collider.transform.GetComponent<PhotonView>().IsMine && collider.transform.CompareTag("Player"))
+        if (collider.CompareTag("Player"))
         {
-            PlayerHealth ph = collider.transform.GetComponent<PlayerHealth>();
-            if(h==0)
+            if (collider.GetComponent<PhotonView>().IsMine)
             {
-                ph.HealthModifications(30);
+                PlayerHealth ph = collider.GetComponent<PlayerHealth>();
+                int h = Random.Range(0, 2); //nb aléatoire pour savoir s'il gagne ou perde de la vie
+                ph.HealthModifications( h==0? 30 : -30);
+                GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0f);
             }
-            else
+            if (GetComponent<PhotonView>().IsMine)
             {
-                ph.HealthModifications(-30);
+                PhotonNetwork.Destroy(gameObject);
             }
-            PhotonNetwork.Destroy(gameObject);
         }
-
     }
 }

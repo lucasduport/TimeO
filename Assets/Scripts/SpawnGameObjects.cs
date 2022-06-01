@@ -23,19 +23,14 @@ public class SpawnGameObjects : MonoBehaviour
                     PhotonNetwork.Instantiate(ObjectsPrefab[i].name, SpawnLocation[i].position, Quaternion.identity);
                 }
             }
-            gameObject.transform.localScale = Vector3.zero;
-            foreach (var c in gameObject.GetComponents<Collider2D>())
-            {
-                c.enabled = false;
-            }
+            GetComponent<Collider2D>().enabled = false;
             StartCoroutine(Destruction());
         }
         
         IEnumerator Destruction()
         {
             yield return new WaitForSeconds(1);
-            if (gameObject.GetComponent<PhotonView>().IsMine &&
-                gameObject.transform.localScale == Vector3.zero)
+            if (GetComponent<PhotonView>().IsMine)
             {
                 PhotonNetwork.Destroy(gameObject);
             }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,23 +26,22 @@ public class PlayerManager : MonoBehaviour
     private bool isJumping;
     private bool isGrounded;
 
-    public GameObject branch;
+    public GameObject weaponcollider;
 
     public Camera m_cam;
     public Canvas canvas;
     private PhotonView _view;
 
-
     private void Start()
     {
-
+        DontDestroyOnLoad(gameObject);
         //Récupération des composants
         rb = GetComponent<Rigidbody2D>();
         PTransform = GetComponent<Transform>();
-        
+
         _view = GetComponent<PhotonView>();
-        POVManager.PlayerCam.Add(gameObject.name,m_cam);
-        
+
+
         //méthode de PhotonView qui permait de savoir si l'on est bien sur la vue du joueur concerné
         if (_view.IsMine)
         {
@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviour
             if (_view.IsMine) PhotonNetwork.Destroy(gameObject);
             POVManager.Spectate = true;
         }
-
+        
         if (_view.IsMine)
         {
             //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
@@ -80,12 +80,12 @@ public class PlayerManager : MonoBehaviour
             //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche
             Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
             Anim.SetBool("isJumping", !isGrounded);
-
+            
             //isHit doit être vraie seulement une frame car l'anim se joue jusqu'à la fin quoiqu'il arrive
             if (Anim.GetBool("isHit")) Anim.SetBool("isHit",false);
 
-            //active l'enfant du player "branch" qui detecte les collisions avec les ennemis (système de coup)
-            branch.SetActive(Anim.GetCurrentAnimatorStateInfo(0).IsName("hit_branch"));
+            //active l'enfant du player "weaponCollider" qui detecte les collisions avec les ennemis (système de coup)
+            weaponcollider.SetActive(Anim.GetCurrentAnimatorStateInfo(0).IsName("hit_branch") || Anim.GetCurrentAnimatorStateInfo(0).IsName("hit_khepesh"));
 
             if (Input.GetButtonDown("Fire1"))
             {
@@ -159,7 +159,7 @@ public class PlayerManager : MonoBehaviour
         if (Anim.GetBool("isStone"))
         {
             Anim.SetBool("isStone", false);
-            if (PTransform.localScale.x == -0.5f)
+            if (PTransform.localScale.x == -0.5)
             {
                 PhotonNetwork.Instantiate("Stone", PTransform.position + new Vector3(-0.7f, 0f, 0f),
                     Quaternion.identity);
@@ -175,7 +175,7 @@ public class PlayerManager : MonoBehaviour
             if (Anim.GetBool("isBranch"))
             {
                 Anim.SetBool("isBranch", false);
-                if (PTransform.localScale.x == -0.5f)
+                if (PTransform.localScale.x == -0.5)
                 {
                     PhotonNetwork.Instantiate("Branch", PTransform.position + new Vector3(-0.7f, 0f, 0f),
                         Quaternion.identity);
@@ -186,6 +186,24 @@ public class PlayerManager : MonoBehaviour
                         Quaternion.identity);
                 }
 
+            }
+            else
+            {
+                if (Anim.GetBool("isKhepesh"))
+                {
+                    Anim.SetBool("isKhepesh", false);
+                    if (PTransform.localScale.x == -0.5)
+                    {
+                        PhotonNetwork.Instantiate("Khepesh", PTransform.position + new Vector3(-1.1f, 0f, 0f),
+                            Quaternion.identity);
+                    }
+                    else
+                    {
+                        PhotonNetwork.Instantiate("Khepesh", PTransform.position + new Vector3(1.1f, 0f, 0f),
+                            Quaternion.identity);
+                    }
+
+                }
             }
         }
     }

@@ -7,7 +7,7 @@ public class HitPlayers : MonoBehaviour
     public int DamageParCoup = 30;
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.transform.CompareTag("Enemy"))
+        if (collider.transform.CompareTag("Enemy") && collider.GetComponent<PhotonView>().IsMine)
         {
             EnemyHealth eh = collider.transform.GetComponent<EnemyHealth>();
             eh.HealthModifications(-DamageParCoup);

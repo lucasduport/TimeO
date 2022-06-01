@@ -10,10 +10,10 @@ public class GravityObject : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.transform.CompareTag("Player"))
+        if (collider.CompareTag("Player"))
         {
             POVManager.GravityEnabled = true;
-            if (gameObject.GetComponent<PhotonView>().IsMine) PhotonNetwork.Destroy(gameObject);
+            if (GetComponent<PhotonView>().IsMine) PhotonNetwork.Destroy(gameObject);
         }
 
     }

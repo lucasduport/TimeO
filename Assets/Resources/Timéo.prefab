@@ -103,7 +103,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 829873745586240121}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 1b9f734c2ff2a954895390159d26c7d6, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -126,7 +126,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 1b9f734c2ff2a954895390159d26c7d6, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -207,23 +207,26 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isWalking
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isJumping
   - Type: 4
     SynchronizeType: 2
     Name: isHit
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isBranch
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: killed
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isStone
+  - Type: 4
+    SynchronizeType: 1
+    Name: isKhepesh
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -241,7 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 3426601821542874176}
   Anim: {fileID: 8012323465514559269}
-  branch: {fileID: 4406151055037039747}
+  weaponcollider: {fileID: 4406151055037039747}
   m_cam: {fileID: 2115813066014728575}
   canvas: {fileID: 903393494064884000}
 --- !u!114 &7287033925955570873
@@ -344,6 +347,10 @@ PrefabInstance:
     - target: {fileID: 3228392988265535000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
       propertyPath: m_Name
       value: weaponCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3228392988265535000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4316526407149174167, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
       propertyPath: m_Enabled
