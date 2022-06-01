@@ -14,7 +14,7 @@ public class Menu : MonoBehaviour
     public GameObject MenuPause;
 
     public GameObject Settings;
-
+    
 
     public void Update()
     {

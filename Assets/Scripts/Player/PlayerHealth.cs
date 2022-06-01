@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         if (!Killed && currentHealth <= 0)
         {
-            GetComponent<Animator>().SetBool("killed",true);
+            gameObject.GetComponent<Animator>().SetBool("killed",true);
             Killed = true;
         }
     }
@@ -57,6 +57,18 @@ public class PlayerHealth : MonoBehaviour
             healthBar.SetHealth(currentHealth);
         }
     }
+    public void Invincibil(int time)
+    {
+        //j'ai rajouté ce ou pour pouvoir se heal même quand on est invincible
+        if (!isInvicible )
+        {
+            //le joueur va subir des dégâts
+            
+             isInvicible = true;
+             StartCoroutine(InvicibilityFlash());
+             StartCoroutine(HandleInvicibilityDelay(time));          
+        }
+    }
 
     public IEnumerator InvicibilityFlash()
     {
@@ -71,7 +83,12 @@ public class PlayerHealth : MonoBehaviour
     
     public IEnumerator HandleInvicibilityDelay()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
+        isInvicible = false;
+    }
+    public IEnumerator HandleInvicibilityDelay(int time)
+    {
+        yield return new WaitForSeconds(time);
         isInvicible = false;
     }
 }

@@ -65,7 +65,6 @@ public class EnemyManager : MonoBehaviour
 
         if (MTransform.localScale.x < 0 && destpoint % 2 == 0)
         {
-            
             destpoint = 1;
             target = waypoints[1].position;
         }
