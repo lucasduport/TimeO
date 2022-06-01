@@ -35,7 +35,8 @@ public class EnemyManager : MonoBehaviour
         Anim = GetComponent<Animator>();
         
         //patrouille
-        if (waypoints.Length >0) target = waypoints[0].position;
+        target = waypoints[1].position;
+        destpoint = 1;
     }
 
     void Update()
@@ -53,7 +54,7 @@ public class EnemyManager : MonoBehaviour
 
         isJumping = false;
 
-        if (waypoints.Length == 2)
+        /*if (waypoints.Length == 2)
         {        
             if (destpoint == 0)
             {
@@ -70,14 +71,36 @@ public class EnemyManager : MonoBehaviour
                 target = waypoints[destpoint].position;
 
             }
+        }*/
+        transform.position = Vector3.MoveTowards(transform.position, target, 0.007f);// bouge jusqu'à la target
+        if (MTransform.localScale.x >0 && destpoint%2 == 1)
+        {
+            destpoint = 0;
+            target = waypoints[0].position;
         }
+
+        if (MTransform.localScale.x < 0 && destpoint % 2 == 0)
+        {
+            
+            destpoint = 1;
+            target = waypoints[1].position;
+        }
+
+        if (Vector3.Distance(transform.position, target) < 0.3f)
+        {
+            destpoint = (destpoint + 1) % 2; // changement de target lorsqu'il en atteint une
+            target = waypoints[destpoint].position;
+            MTransform.localScale = new Vector3(-MTransform.localScale.x, MTransform.localScale.y, MTransform.localScale.z);
+        }
+
+
     }
     // Update is called once per frame
     void FixedUpdate()
     {
         MoveMob(horizontalmove);
 
-        Flip(rb.velocity.x);
+        //Flip(rb.velocity.x);
     }
     
     //MovePlayer() gère de le déplacement du joueur en fonction de _horizontalmove
