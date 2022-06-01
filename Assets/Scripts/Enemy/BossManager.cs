@@ -1,301 +1,226 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using System;
 using Photon.Pun;
 using UnityEditor;
-using UnityEngine;
+
 
 public class BossManager : MonoBehaviour
 {
-
-    private Rigidbody2D rb; //le rigidbody du mob
-    private Transform MTransform; //transform du mob
-    private Animator Anim;
-    public LayerMask layermask;
-
-    public Transform groundCheck; // transform enfant du player qui détecte les colisions avec le sol
-
-
-
-    private float horizontalmove;
-    private Vector3 velocity = Vector3.zero;
-    
-    private bool isJumping;
-    private bool isGrounded;
-
-
-    
-
-    // variables patrouille
-    public Transform[] waypoints; // contient les deux bornes qui délimitent la zone de patrouille du mob
-    private Vector3 target; // point ciblé pour la patrouille.Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
+    public Transform[] waypoints; // contient les deux bornes qui d�limitent la zone de patrouille du mob
+    private Vector3 target; // point cibl� pour la patrouille.Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
     private int destpoint = 0; // coefficient qui prend les valeurs 0 ou 1 pour choisir la target 
-
-    // detection du joueur
-    public bool IsCloseRange; // la détection se fait grâce à Overlaparea entre le coin haut gauche et bas droite de la zone
-    public bool IsMidRange;
-    public Transform CloseRangeHautGauche; 
-    public Transform CloseRangeBasDroite;
-    public Transform MidRangeHautGauche;
-    public Transform MidRangeBasDroite;
-
-    public LayerMask PlayerLayer; // permet d'avoir le layer du player pour la détection de joueur dans la close/mid range, afin de ne pas détecter le sol par ex.
-    public Transform Player; // transform de timeo
-    //public Vector3 PlDest; //pour faire voler le joueur en chargeant
-    private Vector3 Destination; //récupère le point à viser lors de la charge/attaque corps à corps
-    // choix de l'action
-    private System.Random rand = new System.Random(); // random pour choisir entre charge et attaque càc
-    private float randomFloat;
-    public float Char; //coefficient initialisé à 1 qui augmente si la charge est efficace et inversement
-    private char LastAttack; //garde en mémoire la dernière attaque afin de faire varier Char
-    public int CH; // récupère la vie de l'ennemi pour avoir l'efficacité des attaques
-
     
-    //delimitation champ de vision de l'ennemi
-
-    public Transform ChampDeVisionHG;
-    public Transform ChampDeVisionBD;
-
-    public bool InSightRange;// champ de vision. Fonctionne comme IsCloseRange
+    
+    
+    public Transform MTransform; //transform du mob
+    private Animator Anim;
 
 
-    private bool b;
-    private bool bb;
-    private bool c;
-    private bool cb;
-    private bool cbb;
-    private bool bbb;
+    public Transform ChampDeVisionHD; // la d�tection se fait gr�ce � Overlaparea entre le coin haut gauche et bas droite de la zone
+    public Transform ChampDeVisionBG;
 
+    private bool IsCloseRange; 
+    private bool IsMidRange;
+    private bool InSightRange;
 
+    public Transform CloseRangeBasGauche;
+    public Transform CloseRangeHautDroite;
+    public Transform MidRangeBasGauche;
+    public Transform MidRangeHautDroite;
+    public LayerMask PlayerLayer;
+
+    float val = 999999;
+    private Transform ClosestPlayer;
+    private bool IsWaitingToCharge;
     private float t;
+    private Vector3 PosToGo;
+    private bool IsCharging;
 
-    private void Start()
+    private bool IsCloseAttacking;
+
+    private bool HasAttacked;
+
+    private System.Random r;
+    private double Charge;
+    private char LastAttack; // c -> charge ; a -> attaque corps � corps
+
+    // Start is called before the first frame update
+    void Start()
     {
-        CH = GetComponent<EnemyHealth>().currentHealth;
-        
-        //Récupération des composants
-        rb = GetComponent<Rigidbody2D>();
-        MTransform = GetComponent<Transform>();
-        Anim = GetComponent<Animator>();
-        
         //patrouille
         target = waypoints[1].position;
-        b = false;
-        c = false;
-        bb = false;
-        cb = false;
-        bbb = false;
-        cbb = false;
+        destpoint = 1;
+        Charge = 1;
+        r = new System.Random();
     }
 
+    // Update is called once per frame
     void Update()
     {
         
-        
-        //on regarde les collisions à l'intérieur du cerlce de rayon radius autour du groundCheck
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.3f, layermask);
-                                                        //Mob est le nom du layer avec qui les detections ne seront pas faites
-                                                     
-        horizontalmove = 0 * 150 * Time.fixedDeltaTime;
+        IsCloseRange = Physics2D.OverlapArea(CloseRangeBasGauche.position, CloseRangeHautDroite.position, PlayerLayer);
+        IsMidRange = Physics2D.OverlapArea(MidRangeBasGauche.position, MidRangeHautDroite.position, PlayerLayer);
+        InSightRange = Physics2D.OverlapArea(ChampDeVisionBG.position, ChampDeVisionHD.position, PlayerLayer);
 
-        //gestion des animation ==> le joueur bouge horizontalement et n'es pas au sol = il marche
-        Anim.SetBool("isWalking", Math.Abs(rb.velocity.x) > 0.1 && isGrounded);
-        Anim.SetBool("isJumping", !isGrounded);
-
-        isJumping = false;
-        
-        float minDistance = Single.MaxValue;
-        foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+        if (!InSightRange) // patrouille
         {
-            if (Vector3.Distance(transform.position, player.transform.position) < minDistance)
+            transform.position = Vector3.MoveTowards(transform.position, target, 0.005f);// bouge jusqu'� la target
+            if (MTransform.localScale.x > 0 && destpoint % 2 == 1)
             {
-                minDistance = Vector3.Distance(transform.position, player.transform.position);
-                Player = player.transform;
-            }
-        }
-
-
-        IsCloseRange = Physics2D.OverlapArea(CloseRangeHautGauche.position, CloseRangeBasDroite.position, PlayerLayer);
-        IsMidRange = Physics2D.OverlapArea(MidRangeHautGauche.position, MidRangeBasDroite.position, PlayerLayer);
-        InSightRange = Physics2D.OverlapArea(ChampDeVisionHG.position, ChampDeVisionBD.position, PlayerLayer);
-        
-
-        if (GetComponent<EnemyHealth>().currentHealth < CH) //teste efficacité du coup
-        {
-            CH = GetComponent<EnemyHealth>().currentHealth;
-            if (LastAttack == 'a')
-            {
-                Char += (1 / 10);
-                
-            }
-            if (LastAttack == 'c')
-            {
-                Char -= (1 / 10);
+                destpoint = 0;
+                target = waypoints[0].position;
             }
 
-        }
+            if (MTransform.localScale.x < 0 && destpoint % 2 == 0)
+            {
 
-        if (!InSightRange && !b && !c && !cb && !bb && !bbb && !cbb)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, target, 0.005f);// bouge jusqu'à la target
+                destpoint = 1;
+                target = waypoints[1].position;
+            }
 
-            if (Vector2.Distance(transform.position, target) < 0.3f)
+            if (Vector3.Distance(transform.position, target) < 0.3f)
             {
                 destpoint = (destpoint + 1) % 2; // changement de target lorsqu'il en atteint une
                 target = waypoints[destpoint].position;
-
+                MTransform.localScale = new Vector3(-MTransform.localScale.x, MTransform.localScale.y, MTransform.localScale.z);
             }
         }
-        else if ((!IsMidRange || b || bb || bbb) && !c && !cb && ! cbb)
+        else
         {
-            if (!b &&!bb && !bbb)
+           
+            GameObject[] joueurs = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject go in joueurs)
             {
-                if (Player.position.x - transform.position.x > 0)
+                if (Math.Abs(go.transform.position.x) < Math.Abs(val))
                 {
-                    Destination = new Vector3(waypoints[1].position.x, waypoints[1].position.y, 0);
-                }
-                else
-                {
-                    Destination = new Vector3(waypoints[0].position.x, waypoints[0].position.y, 0);
-                }
-                t = Time.time;
-                b = true;
-            }
-            else if(Time.time-t > 2 && b && !bb && !bbb)
-            {
-                if (Vector2.Distance(transform.position, Destination) > 1f)
-                {
-                    transform.position = Vector2.MoveTowards(transform.position, Destination, 0.005f);
-                }
-                else
-                {
-                    b = false;
-                    bb = true;
-                    t = 0;
+                    val = go.transform.position.x;
+                    ClosestPlayer = go.transform;
                 }
             }
-            if (bb)
+            if (HasAttacked)
             {
-                if (!bbb)
+                //vient d'attaquer
+                if (Time.time-t > 2.5f)
                 {
+                   
+                    HasAttacked = false;
+                    Debug.Log("vient d'attaquer");
+                }
+            }
+            else if ((!IsMidRange && !IsCloseAttacking) || IsWaitingToCharge || IsCharging ) // charge
+            {
+                if (!IsWaitingToCharge && !IsCharging)
+                {
+                    //d�but pause avant la charge
+                    IsWaitingToCharge = true;
+                    LastAttack = 'c';
                     t = Time.time;
-                    bbb = true;
-                }
-                else if (Time.time -t >1)
-                {
-                    bb = false;
-                    bbb = false;
-                    t = 0;
-                }
-            }
-            
-            
+                    Debug.Log("debut pause avant la charge");
 
-        }
-        else if ((IsCloseRange || c || cb || cbb) && !b && !bb && !bbb)
-        {
-            if (!c && !cb && !cbb)
-            {
-                Destination = new Vector3(Player.position.x, Player.position.y, 0);
-                t = Time.time;
-                c = true;
-            }
-            if(Time.time - t > 0 && c && !cb && !cbb)
-            {
-                
-                if (Time.time -t < 2 && c && !cb && !cbb)
+                }
+                else
                 {
+                    if (IsCharging && Time.time-t <3f)
+                    {
+                        // charge
+                        //Debug.Log("charge");
+                        if (Vector3.Distance(transform.position, PosToGo) < 0.3f) // fin de la charge si on arrive au bout de la zone
+                        {
+                            IsCharging = false;
+                            HasAttacked = true;
+                            t = Time.time;
+                        }
+                        else
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, PosToGo, 0.04f);
+                        }
+                      
+                    }
+                    else if (IsCharging)
+                    {
+                        // fin de la charge
+                        IsCharging = false; 
+                        HasAttacked = true;
+                        t = Time.time;
+                        Debug.Log("fin charge");
+
+                    }
+                    else if (Time.time - t > 2f)
+                    {
+                        // sur le point de charger
+                        Debug.Log("sur le point de charger");
+                        IsCharging = true; 
+                        IsWaitingToCharge = false;
+                        t = Time.time;
+                        if(ClosestPlayer.position.x <= MTransform.position.x)
+                        {
+                            PosToGo = waypoints[0].position;
+                        }
+                        else
+                        {
+                            PosToGo = waypoints[1].position;
+                        }
+                        
+                    }
+                }
+            }
+            else if ((IsCloseRange && !(IsWaitingToCharge || IsCharging)) || IsCloseAttacking) // attaque corps � corps
+            {
+                if (!IsCloseAttacking) // debut de l'attaque
+                {
+                    IsCloseAttacking = true;
+                    LastAttack = 'a'; 
+                    t = Time.time;
+                    Debug.Log("debut acac");
+
+                }
+                else if (Time.time-t < 3f) // attaque
+                {
+                    if (ClosestPlayer.position.x <= MTransform.position.x)
+                    {
+                        PosToGo = waypoints[0].position;
+                    }
+                    else
+                    {
+                        PosToGo = waypoints[1].position;
+                    }
+                    //Debug.Log("acac");
+                    transform.position = Vector3.MoveTowards(transform.position, PosToGo, 0.01f);
                     
-                    transform.position = Vector2.MoveTowards(transform.position, Destination, 0.001f); // mouvement moyen
                 }
-                else
+                else // fin de l'attaque
                 {
-                    c = false;
-                    cb = true;
-                    t = 0;
+                    IsCloseAttacking = false;
+                    HasAttacked = true;
+                    t = Time.time;
+                    Debug.Log("fin attaque cac");
+                    
                 }
                 
             }
-            if (cb)
+            else if (IsMidRange)
             {
-                if (!cbb)
+                if (r.Next(10)*Charge >= 5)
                 {
+                    IsWaitingToCharge = true;
+                    LastAttack = 'c';
                     t = Time.time;
-                    cbb = true;
+                    Debug.Log("charge via mid range");
                 }
-                else if (Time.time - t > 1)
+                else
                 {
-                    cb = false;
-                    cbb = false;
-                    t = 0;
+                    IsCloseAttacking = true;
+                    LastAttack = 'a';
+                    t = Time.time;
+                    Debug.Log("attaque cac via mid range");
                 }
             }
-
         }
-        else if (IsMidRange && !b && !c && !cb && !bb && !bbb && !cbb)
-        {
-            randomFloat = (float)rand.NextDouble();
-            t = Time.time;
-            if (randomFloat * Char < 0.5)// on multiplie le nombre aléatoire par char ce qui a tendance à renvoyer le meilleur coup mais pas tout le temps non plus
-            { 
-                c = true;
-            }
-            else
-            {
-                b = true;
-            }
-        }
+        
+        
     }
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        MoveMob(horizontalmove);
-
-        Flip(rb.velocity.x);
-    }
-    
-    //MovePlayer() gère de le déplacement du joueur en fonction de _horizontalmove
-    void MoveMob (float _horizontalmove)
-    {
-        Vector3 targetVelocity = new Vector2(_horizontalmove, rb.velocity.y);
-        //le SmoothDamp permet de ne pas faire un déplacement trop bref mais légerement glissé
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, 0.15f);
-        if (isJumping)
-        {
-            //On pousse le rigidbody vers le haut
-            rb.AddForce(new Vector2(0f, 250f));
-            
-            isJumping = false;
-        }
-    }
-    
-    //Flip() qui prend en paramètre la vitesse du RigidBody, permet de savoir dans quel sens se déplace le perso et ainsi
-    //de retourner l'image si besoin
-    void Flip(float _rbvelocity)
-    {
-        if (_rbvelocity < -0.1f && MTransform.localScale.x > 0)
-        {
-            //la scale est inversée, l'image est retournée
-            MTransform.localScale = new Vector3(-MTransform.localScale.x,MTransform.localScale.y,MTransform.localScale.z);
-        }
-        else 
-        {
-            if (_rbvelocity > 0.1f && MTransform.localScale.x < 0)
-            {
-                MTransform.localScale = new Vector3(-MTransform.localScale.x,MTransform.localScale.y,MTransform.localScale.z);
-            }
-        }
-
-    }
-    // Je me garde cette fonction sous la main qui draw des guizmos c'est utile pour gérer le saut
-    /*private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position,0.3f);
-    }
-
-    */
-
-
+   
     
 }
