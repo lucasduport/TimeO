@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class POVManager : MonoBehaviour
+public class POVManager : MonoBehaviour, IPunObservable
 {
     // Start is called before the first frame update
     public static bool GravityEnabled = false;
@@ -53,6 +53,21 @@ public class POVManager : MonoBehaviour
             gameObject.SetActive(false);
         }
 
+    }
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(GravityEnabled);
+        }
+        else
+        {
+            if (stream.IsReading)
+            {
+                GravityEnabled = (bool) stream.ReceiveNext();
+            }
+        }
     }
 
 

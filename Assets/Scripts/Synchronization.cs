@@ -10,7 +10,6 @@ public class Synchronization : MonoBehaviour, IPunObservable
     {
         if (stream.IsWriting)
         {
-            
         }
         else
         {

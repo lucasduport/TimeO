@@ -11,12 +11,12 @@ public class WeaponStone : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && !collider.GetComponent<Animator>().GetBool("isStone"))
         {
             if (collider.GetComponent<PhotonView>().IsMine)
             {
                 Animator ph = collider.GetComponent<Animator>();
-                ph.SetBool("isStone", true);
+                StartCoroutine(Anim(ph));
                 StartCoroutine(Destruction());
             }
             foreach (var c in GetComponents<Collider2D>())
@@ -28,9 +28,9 @@ public class WeaponStone : MonoBehaviour
 
         if (collider.CompareTag("Stone"))
         {
-            if (collider.GetComponent<PhotonView>().IsMine && collider.GetComponent<Rigidbody2D>().velocity.y == 0)
+            if (collider.GetComponent<PhotonView>().IsMine)
             {
-                PhotonNetwork.Instantiate("Fire", transform.position, Quaternion.identity);
+                if (GetComponent<Rigidbody2D>().velocity.y == 0) PhotonNetwork.Instantiate("Fire", transform.position, Quaternion.identity);
                 StartCoroutine(Destruction());
             }
             foreach (var c in gameObject.GetComponents<Collider2D>())
@@ -40,9 +40,16 @@ public class WeaponStone : MonoBehaviour
             transform.localScale = Vector3.zero;
         }
     }
+    
+    IEnumerator Anim(Animator animator)
+    {
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool("isStone",true);
+    }
+    
     IEnumerator Destruction()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         if (GetComponent<PhotonView>().IsMine)
         {
             PhotonNetwork.Destroy(gameObject);

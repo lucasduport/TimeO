@@ -224,6 +224,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isStone
+  - Type: 4
+    SynchronizeType: 1
+    Name: isKhepesh
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -241,7 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 3426601821542874176}
   Anim: {fileID: 8012323465514559269}
-  branch: {fileID: 4406151055037039747}
+  weaponcollider: {fileID: 4406151055037039747}
   m_cam: {fileID: 2115813066014728575}
   canvas: {fileID: 903393494064884000}
 --- !u!114 &7287033925955570873

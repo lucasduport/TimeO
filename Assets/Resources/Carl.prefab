@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 8048559128343390082}
   Anim: {fileID: 1991021293448975202}
-  branch: {fileID: 7898674839629165521}
+  weaponcollider: {fileID: 7898674839629165521}
   m_cam: {fileID: 4289584902143866707}
   canvas: {fileID: 3424609496694478503}
 --- !u!114 &6634860395945203157
@@ -241,6 +241,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isStone
+  - Type: 4
+    SynchronizeType: 1
+    Name: isKhepesh
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -419,6 +422,10 @@ PrefabInstance:
     - target: {fileID: 3228392988265535000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
       propertyPath: m_Name
       value: weaponCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3228392988265535000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
