@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6152896954255503805}
   - component: {fileID: 7098610741437077191}
   - component: {fileID: 5352018362149386911}
-  - component: {fileID: 8263587468265602993}
+  - component: {fileID: 6030290138709422206}
   - component: {fileID: 4190302730198790196}
   m_Layer: 6
   m_Name: PreHistoryEnemy
@@ -237,7 +237,7 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8263587468265602993
+--- !u!114 &6030290138709422206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  healthBar: {fileID: 5560864068410671398}
+  healthBar: {fileID: 0}
   prefabToInstantianteOnDeath: 
 --- !u!222 &4190302730198790196
 CanvasRenderer:
@@ -530,6 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageParCoup: 20
+  t: {fileID: 0}
 --- !u!1 &3989720957483352416
 GameObject:
   m_ObjectHideFlags: 0
