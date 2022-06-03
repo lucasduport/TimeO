@@ -14,18 +14,19 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom("e");
+        PhotonNetwork.CreateRoom("p");
     }
 
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom("e");
+        PhotonNetwork.JoinRoom("p");
     }
 
     public void QuitGame()
     {
         Application.Quit();
     }
+    
 
     public override void OnJoinedRoom()
     {

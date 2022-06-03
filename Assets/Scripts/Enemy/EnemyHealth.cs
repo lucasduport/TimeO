@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
 
     public Collider2D[] Colliders;
     public String prefabToInstantianteOnDeath = "";
+    public bool dieAnim = false;
     void Start()
     {
         currentHealth = maxHealth;
@@ -47,11 +48,28 @@ public class EnemyHealth : MonoBehaviour
             {
                 PhotonNetwork.Instantiate(prefabToInstantianteOnDeath, transform.position, Quaternion.identity);
             }
-            foreach (var c in Colliders)
+
+            if (dieAnim)
             {
-                c.enabled = true;
+                foreach (var c in Colliders)
+                {
+                    c.isTrigger = true;
+                }
+
+                healthBar.enabled = false;
+                StartCoroutine(DelayedDie());
             }
-            PhotonNetwork.Destroy(gameObject);
+            else
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+
         }
+    }
+
+    IEnumerator DelayedDie()
+    {
+        yield return new WaitForSeconds(1);
+        PhotonNetwork.Destroy(gameObject);
     }
 }

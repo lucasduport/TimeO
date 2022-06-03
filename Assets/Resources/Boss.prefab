@@ -295,7 +295,9 @@ MonoBehaviour:
   maxHealth: 2000
   currentHealth: 0
   healthBar: {fileID: 5845082304947890762}
-  prefabToInstantianteOnDeath: Lit
+  Colliders: []
+  prefabToInstantianteOnDeath: 
+  dieAnim: 0
 --- !u!222 &2744729752032254808
 CanvasRenderer:
   m_ObjectHideFlags: 0

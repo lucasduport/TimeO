@@ -34,7 +34,6 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
         //Récupération des composants
         rb = GetComponent<Rigidbody2D>();
         PTransform = GetComponent<Transform>();
@@ -49,6 +48,11 @@ public class PlayerManager : MonoBehaviour
             m_cam.gameObject.SetActive(true);
             canvas.gameObject.SetActive(true);
         }
+    }
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -154,6 +158,7 @@ public class PlayerManager : MonoBehaviour
     {
         Anim.SetBool("isHit",true);
     }
+    
     void Drop()
     {
         if (Anim.GetBool("isStone"))

@@ -8,7 +8,7 @@ public class HitEnemies : MonoBehaviour
     public int DamageParCoup = 20;
     // Start is called before the first frame update
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerStay2D(Collider2D collider)
     {
         if (collider.CompareTag("Player"))
         {
