@@ -76,7 +76,7 @@ public class Menu : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        mainMixer.SetFloat("musique", volume);
+        mainMixer.SetFloat("volume", volume);
     }
 
     public void Back()
