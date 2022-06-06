@@ -148,6 +148,7 @@ MonoBehaviour:
   weaponcollider: {fileID: 7898674839629165521}
   m_cam: {fileID: 4289584902143866707}
   canvas: {fileID: 3424609496694478503}
+  sound: {fileID: 8300000, guid: 7b7376c9add2d8b4381ee35fd007eb04, type: 3}
 --- !u!114 &6634860395945203157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  sound: {fileID: 8300000, guid: febe28a083f590c40b2956f52210e5ea, type: 3}
   spriteRenderer: {fileID: 3204511318960415447}
   healthBar: {fileID: 5450126783458858703}
   Killed: 0
@@ -444,6 +446,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4131148322755815223, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 140477c936bd6284ba556e3d7a0ea6f4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
 --- !u!1 &7898674839629165521 stripped

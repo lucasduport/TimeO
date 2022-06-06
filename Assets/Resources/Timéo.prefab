@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  sound: {fileID: 8300000, guid: febe28a083f590c40b2956f52210e5ea, type: 3}
   spriteRenderer: {fileID: 4322859508680806437}
   healthBar: {fileID: 7542802354621245768}
   Killed: 0
@@ -247,6 +248,7 @@ MonoBehaviour:
   weaponcollider: {fileID: 4406151055037039747}
   m_cam: {fileID: 2115813066014728575}
   canvas: {fileID: 903393494064884000}
+  sound: {fileID: 8300000, guid: 7b7376c9add2d8b4381ee35fd007eb04, type: 3}
 --- !u!114 &5046778510421844384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,6 +371,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4131148322755815223, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 140477c936bd6284ba556e3d7a0ea6f4, type: 3}
     - target: {fileID: 4316526407149174167, guid: 795442eb15ffcf842ac0f646c78b1e4e, type: 3}
       propertyPath: m_Enabled
       value: 1

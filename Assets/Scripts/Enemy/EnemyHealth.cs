@@ -15,7 +15,8 @@ public class EnemyHealth : MonoBehaviour
 
     public Collider2D[] Colliders;
     public String prefabToInstantianteOnDeath = "";
-    public bool dieAnim = false;
+    public bool dieAnim;
+    public bool classicEnnemi;
     void Start()
     {
         currentHealth = maxHealth;
@@ -48,14 +49,23 @@ public class EnemyHealth : MonoBehaviour
             {
                 PhotonNetwork.Instantiate(prefabToInstantianteOnDeath, transform.position, Quaternion.identity);
             }
-
+            
+            foreach (var c in Colliders)
+            {
+                c.isTrigger = true;
+            }
+            
             if (dieAnim)
             {
-                foreach (var c in Colliders)
+                if (classicEnnemi)
                 {
-                    c.isTrigger = true;
+                    GetComponent<EnemyManager>().enabled = false;
                 }
-
+                else
+                {
+                    GetComponent<BossManager>().enabled = false;
+                }
+                    
                 healthBar.enabled = false;
                 StartCoroutine(DelayedDie());
             }

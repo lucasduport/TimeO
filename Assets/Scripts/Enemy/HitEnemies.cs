@@ -6,11 +6,20 @@ using UnityEngine;
 public class HitEnemies : MonoBehaviour
 {
     public int DamageParCoup = 20;
+    public AudioClip sound;
     // Start is called before the first frame update
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Menu.instance.PlayClipAt(sound, transform.position);
+        }
+    }
 
     private void OnTriggerStay2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && transform.parent.GetComponent<EnemyHealth>().currentHealth>=0)
         {
             PlayerHealth playerHealth = collider.GetComponent<PlayerHealth>();
             Animator anim = transform.parent.GetComponent<Animator>();

@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3542733966727529400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 168.92618, y: 18.007557, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
+  m_LocalScale: {x: 0.035, y: 0.032, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -133,14 +133,14 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3542733966727529400}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.5930903, y: -0.6619794}
-  m_Size: {x: 49.830925, y: 21.244652}
+  m_Offset: {x: -1.8091508, y: 1.2079467}
+  m_Size: {x: 48.564, y: 4.8149004}
   m_Direction: 1
 --- !u!114 &7145507692793282124
 MonoBehaviour:
@@ -156,6 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newSpawn: {fileID: 0}
   transition: {fileID: 0}
+  musicToStop: {fileID: 0}
+  musicToStart: {fileID: 0}
 --- !u!61 &8859448648497792772
 BoxCollider2D:
   m_ObjectHideFlags: 0

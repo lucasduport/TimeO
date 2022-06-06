@@ -9,10 +9,12 @@ using UnityEngine;
 
 public class WeaponStone : MonoBehaviour
 {
+    public AudioClip sound;
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Player") && !collider.GetComponent<Animator>().GetBool("isStone"))
         {
+            Menu.instance.PlayClipAt(sound, transform.position);
             if (collider.GetComponent<PhotonView>().IsMine)
             {
                 Animator ph = collider.GetComponent<Animator>();

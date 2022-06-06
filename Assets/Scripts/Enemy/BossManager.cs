@@ -42,6 +42,10 @@ public class BossManager : MonoBehaviour
     private System.Random r;
     private double Charge;
 
+    public float patrouille;
+    public float chargev;
+    public float cac;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,14 +59,18 @@ public class BossManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         IsCloseRange = Physics2D.OverlapArea(CloseRangeBasGauche.position, CloseRangeHautDroite.position, PlayerLayer);
         IsMidRange = Physics2D.OverlapArea(MidRangeBasGauche.position, MidRangeHautDroite.position, PlayerLayer);
         InSightRange = Physics2D.OverlapArea(ChampDeVisionBG.position, ChampDeVisionHD.position, PlayerLayer);
 
         if (!InSightRange) // patrouille
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, 0.0035f);// bouge jusqu'� la target
+            
+            IsCharging = false;
+            IsCloseAttacking = false;
+            IsWaitingToCharge = false;
+
+            transform.position = Vector3.MoveTowards(transform.position, target, patrouille);// vitesse patrouille
             if (MTransform.localScale.x > 0 && destpoint % 2 == 1)
             {
                 destpoint = 0;
@@ -100,8 +108,8 @@ public class BossManager : MonoBehaviour
                 //vient d'attaquer
                 if (Time.time-t > 2.5f)
                 {
-                   
                     HasAttacked = false;
+                    
                 }
             }
             else if ((!IsMidRange && !IsCloseAttacking) || IsWaitingToCharge || IsCharging ) // charge
@@ -111,6 +119,7 @@ public class BossManager : MonoBehaviour
                     //d�but pause avant la charge
                     IsWaitingToCharge = true;
                     t = Time.time;
+                    
 
                 }
                 else
@@ -126,7 +135,7 @@ public class BossManager : MonoBehaviour
                         }
                         else
                         {
-                            transform.position = Vector3.MoveTowards(transform.position, PosToGo, 0.006f);
+                            transform.position = Vector3.MoveTowards(transform.position, PosToGo, chargev); //vitesse charge
                         }
                       
                     }
@@ -136,7 +145,6 @@ public class BossManager : MonoBehaviour
                         IsCharging = false; 
                         HasAttacked = true;
                         t = Time.time;
-
                     }
                     else if (Time.time - t > 2f)
                     {
@@ -147,10 +155,12 @@ public class BossManager : MonoBehaviour
                         if(ClosestPlayer.position.x <= MTransform.position.x)
                         {
                             PosToGo = waypoints[0].position;
+                            transform.localScale = Vector3.one;
                         }
                         else
                         {
                             PosToGo = waypoints[1].position;
+                            transform.localScale = new Vector3(-1, 1, 1);
                         }
                         
                     }
@@ -174,7 +184,7 @@ public class BossManager : MonoBehaviour
                         PosToGo = waypoints[1].position;
                     }
 
-                    transform.position = Vector3.MoveTowards(transform.position, PosToGo, 0.01f);
+                    transform.position = Vector3.MoveTowards(transform.position, PosToGo, cac); // vitesse attaque corps à corps
                     
                 }
                 else // fin de l'attaque
@@ -199,5 +209,6 @@ public class BossManager : MonoBehaviour
                 }
             }
         }
-    }
+        GetComponent<Animator>().SetBool("isWalking", !IsWaitingToCharge);
+    }                    
 }

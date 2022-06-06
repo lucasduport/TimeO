@@ -31,6 +31,8 @@ public class PlayerManager : MonoBehaviour
     public Camera m_cam;
     public Canvas canvas;
     private PhotonView _view;
+    public AudioClip sound;
+    
 
     private void Start()
     {
@@ -97,6 +99,7 @@ public class PlayerManager : MonoBehaviour
             }
             if (Input.GetButtonDown("Jump") && isGrounded && Math.Abs(rb.velocity.y) < 0.5)
             {
+                Menu.instance.PlayClipAt(sound, transform.position);
                 isJumping = true;
             }
 

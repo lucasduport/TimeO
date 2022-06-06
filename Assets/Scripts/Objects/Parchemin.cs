@@ -10,10 +10,12 @@ public class Parchemin : MonoBehaviour
     // Start is called before the first frame update
     public Text DisplayZone;
     public string Text = "";
+    public AudioClip sound;
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.transform.CompareTag("Player"))
         {
+            Menu.instance.PlayClipAt(sound, transform.position);
             if (collider.transform.GetComponent<PhotonView>().IsMine)
             {
                 gameObject.transform.GetChild(0).gameObject.SetActive(true);

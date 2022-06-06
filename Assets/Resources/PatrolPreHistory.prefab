@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6635619827645683809
 RectTransform:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 3.53, y: 2.69}
   m_SizeDelta: {x: -12.32, y: -32.27}
   m_Pivot: {x: 0.5, y: 0.49999985}
@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageParCoup: 20
+  sound: {fileID: 8300000, guid: bf94c332f9a87ac44b5ea17c36da8808, type: 3}
 --- !u!1 &5674601308535797049
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,6 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 2349478855727867005}
+  max: 100
 --- !u!1 &6023484387751820659
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,7 +770,10 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 4187311052757439668}
+  Colliders: []
   prefabToInstantianteOnDeath: 
+  dieAnim: 0
+  classicEnnemi: 0
 --- !u!222 &5554780563701736870
 CanvasRenderer:
   m_ObjectHideFlags: 0

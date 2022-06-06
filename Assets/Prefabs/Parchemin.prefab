@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayZone: {fileID: 7255150692861162107}
   Text: 
+  sound: {fileID: 8300000, guid: bed4fc691706f14429358793efba64ac, type: 3}
 --- !u!222 &2790870502828109458
 CanvasRenderer:
   m_ObjectHideFlags: 0

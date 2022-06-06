@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
+
+
+    public static Menu instance;
     // Start is called before the first frame update
     public GameObject GameOver;
 
@@ -14,7 +18,10 @@ public class Menu : MonoBehaviour
     public GameObject MenuPause;
 
     public GameObject Settings;
-    
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void Update()
     {
@@ -69,7 +76,7 @@ public class Menu : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        mainMixer.SetFloat("volume", volume);
+        mainMixer.SetFloat("musique", volume);
     }
 
     public void Back()
@@ -87,5 +94,16 @@ public class Menu : MonoBehaviour
     public void Pause()
     {
         MenuPause.SetActive(true);
+    }
+    public AudioSource PlayClipAt(AudioClip clip, Vector3 pos)
+    {
+        GameObject tempgo = new GameObject("TempAudio");
+        tempgo.transform.position = pos;
+        AudioSource audioSource = tempgo.AddComponent<AudioSource>();
+        audioSource.clip = clip;
+        audioSource.Play();
+        audioSource.loop = true;
+        Destroy(tempgo, clip.length);
+        return audioSource;
     }
 }

@@ -4,11 +4,12 @@ using UnityEngine;
 using Photon.Pun;
 public class Gift : MonoBehaviour
 {
-   
+    public AudioClip sound;
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Player"))
         {
+            Menu.instance.PlayClipAt(sound, transform.position);
             if (collider.GetComponent<PhotonView>().IsMine)
             {
                 PlayerHealth ph = collider.GetComponent<PlayerHealth>();

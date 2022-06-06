@@ -9,6 +9,10 @@ public class Bed : MonoBehaviour
     public Transform newSpawn;
 
     public GameObject transition;
+    public bool end = false;
+    public GameObject musicToStop;
+
+    public GameObject musicToStart;
     // Start is called before the first frame update
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -17,13 +21,16 @@ public class Bed : MonoBehaviour
             collider.transform.position = newSpawn.position;
             collider.GetComponent<Animator>().SetBool("isStone",false);
             collider.GetComponent<Animator>().SetBool("isBranch",false);
-            StartCoroutine(Transition());
+            transition.SetActive(true);
+            if (!end) StartCoroutine(Transition());
+            musicToStop.SetActive(false);
+            musicToStart.SetActive(true);
+            
         }
     }
 
     IEnumerator Transition()
     {
-        transition.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         transition.SetActive(false);
     }

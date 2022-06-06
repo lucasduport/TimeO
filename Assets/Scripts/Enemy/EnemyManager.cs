@@ -26,6 +26,8 @@ public class EnemyManager : MonoBehaviour
     private Vector3 target; // point ciblé pour la patrouille. Change quand il est atteint(alternance en waypoints[0] et waypoints[1]
     private int destpoint; // coefficient qui prend les valeurs 0 ou 1 pour choisir la target 
     public float speedEnemy = 0.0035f;
+    private bool EnemyClose;
+    float t;
 
     private void Start()
     {
@@ -39,6 +41,8 @@ public class EnemyManager : MonoBehaviour
         target = waypoints[1].position;
         destpoint = 1;
         Anim.SetBool("isWalking", true);
+        EnemyClose = false;
+       
     }
 
     void Update()
@@ -55,7 +59,19 @@ public class EnemyManager : MonoBehaviour
         Anim.SetBool("isJumping", !isGrounded);
 
         isJumping = false;
+       
         
+        
+        
+        
+        GameObject[] ennemis = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject e in ennemis)
+        {
+            if (Vector3.Distance(transform.position, e.transform.position) < 1f && e.transform != this.transform)
+            {
+                StartCoroutine(EnemyColision());
+            }
+        }
         transform.position = Vector3.MoveTowards(transform.position, target, speedEnemy);// bouge jusqu'à la target
         if (MTransform.localScale.x >0 && destpoint%2 == 1)
         {
@@ -76,8 +92,11 @@ public class EnemyManager : MonoBehaviour
             MTransform.localScale = new Vector3(-MTransform.localScale.x, MTransform.localScale.y, MTransform.localScale.z);
         }
 
-
     }
+
+
+
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -127,7 +146,13 @@ public class EnemyManager : MonoBehaviour
     }
 
     */
-
+    IEnumerator EnemyColision()
+    {       
+        destpoint = (destpoint + 1) % 2; 
+        target = waypoints[destpoint].position;
+        MTransform.localScale = new Vector3(-MTransform.localScale.x, MTransform.localScale.y, MTransform.localScale.z);
+        yield return new WaitForSeconds(0.1f);
+    } 
 
     
 }

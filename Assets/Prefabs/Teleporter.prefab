@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b470e07c401c4e247b237a3250ea16cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound: {fileID: 8300000, guid: f7ffd79a0fdc0b345854a527015cbdd6, type: 3}
   TPpoint: {fileID: 8099776760777083586}
 --- !u!212 &6880316099060912405
 SpriteRenderer:

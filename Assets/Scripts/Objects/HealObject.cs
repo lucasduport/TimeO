@@ -4,12 +4,14 @@ using UnityEngine;
 using Photon.Pun;
 public class HealObject : MonoBehaviour
 {
+    public AudioClip sound;
     // Start is called before the first frame update
     public int heal;
     void OnTriggerEnter2D(Collider2D collider)
     {
         if ( collider.CompareTag("Player"))
         {
+            Menu.instance.PlayClipAt(sound, transform.position);
             if (collider.GetComponent<PhotonView>().IsMine)
             {
                 PlayerHealth ph = collider.GetComponent<PlayerHealth>();

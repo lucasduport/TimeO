@@ -6,10 +6,12 @@ using UnityEngine;
 using Photon.Pun;
 public class WeaponBranch : MonoBehaviour
 {
+    public AudioClip sound;
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Player") && !collider.GetComponent<Animator>().GetBool("isBranch"))
         {
+            Menu.instance.PlayClipAt(sound, transform.position);
             PhotonView pView = collider.GetComponent<PhotonView>();
             if (pView.IsMine)
             {

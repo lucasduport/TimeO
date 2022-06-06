@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
+    public AudioClip sound;
     
 
     public SpriteRenderer spriteRenderer;
@@ -44,6 +45,7 @@ public class PlayerHealth : MonoBehaviour
             //le joueur va subir des dégâts
             if (number < 0)
             {
+                Menu.instance.PlayClipAt(sound, transform.position);
                 isInvicible = true;
                 StartCoroutine(InvicibilityFlash());
                 StartCoroutine(HandleInvicibilityDelay());
